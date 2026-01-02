@@ -23,6 +23,7 @@ import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
+import net.minecraft.world.phys.shapes.Shapes;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -39,10 +40,29 @@ public class ShutterBlock extends Block implements SimpleWaterloggedBlock {
 
     protected final BlockSetType type;
 
+    // Closed Shapes
     protected static final VoxelShape NORTH_SHAPE = Block.box(0.0D, 0.0D, 14.0D, 16.0D, 16.0D, 16.0D);
     protected static final VoxelShape SOUTH_SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 2.0D);
     protected static final VoxelShape EAST_SHAPE = Block.box(0.0D, 0.0D, 0.0D, 2.0D, 16.0D, 16.0D);
     protected static final VoxelShape WEST_SHAPE = Block.box(14.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D);
+
+    // Open Shapes
+    protected static final VoxelShape NORTH_OPEN_SHAPE = Shapes.or(
+            Block.box(-6.0D, 0.0D, 14.0D, 2.0D, 16.0D, 16.0D),
+            Block.box(14.0D, 0.0D, 14.0D, 22.0D, 16.0D, 16.0D)
+    );
+    protected static final VoxelShape SOUTH_OPEN_SHAPE = Shapes.or(
+            Block.box(-6.0D, 0.0D, 0.0D, 2.0D, 16.0D, 2.0D),
+            Block.box(14.0D, 0.0D, 0.0D, 22.0D, 16.0D, 2.0D)
+    );
+    protected static final VoxelShape EAST_OPEN_SHAPE = Shapes.or(
+            Block.box(0.0D, 0.0D, -6.0D, 2.0D, 16.0D, 2.0D),
+            Block.box(0.0D, 0.0D, 14.0D, 2.0D, 16.0D, 22.0D)
+    );
+    protected static final VoxelShape WEST_OPEN_SHAPE = Shapes.or(
+            Block.box(14.0D, 0.0D, -6.0D, 16.0D, 16.0D, 2.0D),
+            Block.box(14.0D, 0.0D, 14.0D, 16.0D, 16.0D, 22.0D)
+    );
 
     public ShutterBlock(BlockSetType type, Properties properties) {
         super(properties);
@@ -63,9 +83,10 @@ public class ShutterBlock extends Block implements SimpleWaterloggedBlock {
     public @NotNull VoxelShape getShape(BlockState state, @NotNull BlockGetter level, @NotNull BlockPos pos, @NotNull CollisionContext context) {
         if (state.getValue(OPEN)) {
             return switch (state.getValue(FACING)) {
-                case NORTH, SOUTH -> Block.box(0, 0, 0, 16, 16, 2);
-                case EAST, WEST -> Block.box(0, 0, 0, 2, 16, 16);
-                default -> NORTH_SHAPE;
+                case SOUTH -> SOUTH_OPEN_SHAPE;
+                case EAST -> EAST_OPEN_SHAPE;
+                case WEST -> WEST_OPEN_SHAPE;
+                default -> NORTH_OPEN_SHAPE;
             };
         }
         return switch (state.getValue(FACING)) {
