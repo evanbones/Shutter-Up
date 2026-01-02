@@ -59,46 +59,76 @@ public class ModModelProvider extends FabricModelProvider {
         ResourceLocation leftBlockedModel = leftBlockedTemplate.createWithSuffix(block, "_open_left_blocked", textureMapping, generator.modelOutput);
         ResourceLocation rightBlockedModel = rightBlockedTemplate.createWithSuffix(block, "_open_right_blocked", textureMapping, generator.modelOutput);
 
-        MultipartGenerator multipart = MultipartGenerator.multiPart(block);
+        MultiPartGenerator multipart = MultiPartGenerator.multiPart(block);
 
-        // 1. Closed State
-        multipart.with(Condition.condition().term(ShutterBlock.OPEN, false), Variant.variant().with(VariantProperties.MODEL, closedModel));
+        for (Direction dir : Direction.Plane.HORIZONTAL) {
+            VariantProperties.Rotation yRot = switch (dir) {
+                case EAST -> VariantProperties.Rotation.R90;
+                case SOUTH -> VariantProperties.Rotation.R180;
+                case WEST -> VariantProperties.Rotation.R270;
+                default -> VariantProperties.Rotation.R0;
+            };
 
-        // 2. Open State - Normal
-        multipart.with(Condition.condition()
-                        .term(ShutterBlock.OPEN, true)
-                        .term(ShutterBlock.BLOCKED_LEFT, false)
-                        .term(ShutterBlock.BLOCKED_RIGHT, false),
-                Variant.variant().with(VariantProperties.MODEL, openModel));
+            // 1. Closed State
+            multipart.with(
+                    Condition.condition()
+                            .term(ShutterBlock.FACING, dir)
+                            .term(ShutterBlock.OPEN, false),
+                    Variant.variant()
+                            .with(VariantProperties.MODEL, closedModel)
+                            .with(VariantProperties.Y_ROT, yRot)
+            );
 
-        // 3. Open State - Left Blocked
-        multipart.with(Condition.condition()
-                        .term(ShutterBlock.OPEN, true)
-                        .term(ShutterBlock.BLOCKED_LEFT, true)
-                        .term(ShutterBlock.BLOCKED_RIGHT, false),
-                Variant.variant().with(VariantProperties.MODEL, leftBlockedModel));
+            // 2. Open State - Normal
+            multipart.with(
+                    Condition.condition()
+                            .term(ShutterBlock.FACING, dir)
+                            .term(ShutterBlock.OPEN, true)
+                            .term(ShutterBlock.BLOCKED_LEFT, false)
+                            .term(ShutterBlock.BLOCKED_RIGHT, false),
+                    Variant.variant()
+                            .with(VariantProperties.MODEL, openModel)
+                            .with(VariantProperties.Y_ROT, yRot)
+            );
 
-        // 4. Open State - Right Blocked
-        multipart.with(Condition.condition()
-                        .term(ShutterBlock.OPEN, true)
-                        .term(ShutterBlock.BLOCKED_LEFT, false)
-                        .term(ShutterBlock.BLOCKED_RIGHT, true),
-                Variant.variant().with(VariantProperties.MODEL, rightBlockedModel));
+            // 3. Open State - Left Blocked
+            multipart.with(
+                    Condition.condition()
+                            .term(ShutterBlock.FACING, dir)
+                            .term(ShutterBlock.OPEN, true)
+                            .term(ShutterBlock.BLOCKED_LEFT, true)
+                            .term(ShutterBlock.BLOCKED_RIGHT, false),
+                    Variant.variant()
+                            .with(VariantProperties.MODEL, leftBlockedModel)
+                            .with(VariantProperties.Y_ROT, yRot)
+            );
 
-        // 5. Open State - Both Blocked
-        multipart.with(Condition.condition()
-                        .term(ShutterBlock.OPEN, true)
-                        .term(ShutterBlock.BLOCKED_LEFT, true)
-                        .term(ShutterBlock.BLOCKED_RIGHT, true),
-                Variant.variant().with(VariantProperties.MODEL, leftBlockedModel));
+            // 4. Open State - Right Blocked
+            multipart.with(
+                    Condition.condition()
+                            .term(ShutterBlock.FACING, dir)
+                            .term(ShutterBlock.OPEN, true)
+                            .term(ShutterBlock.BLOCKED_LEFT, false)
+                            .term(ShutterBlock.BLOCKED_RIGHT, true),
+                    Variant.variant()
+                            .with(VariantProperties.MODEL, rightBlockedModel)
+                            .with(VariantProperties.Y_ROT, yRot)
+            );
 
-        generator.blockStateOutput.accept(multipart.with(
-                PropertyDispatch.property(ShutterBlock.FACING)
-                        .select(Direction.NORTH, Variant.variant().with(VariantProperties.Y_ROT, VariantProperties.Rotation.R0))
-                        .select(Direction.EAST, Variant.variant().with(VariantProperties.Y_ROT, VariantProperties.Rotation.R90))
-                        .select(Direction.SOUTH, Variant.variant().with(VariantProperties.Y_ROT, VariantProperties.Rotation.R180))
-                        .select(Direction.WEST, Variant.variant().with(VariantProperties.Y_ROT, VariantProperties.Rotation.R270))
-        ));
+            // 5. Open State - Both Blocked
+            multipart.with(
+                    Condition.condition()
+                            .term(ShutterBlock.FACING, dir)
+                            .term(ShutterBlock.OPEN, true)
+                            .term(ShutterBlock.BLOCKED_LEFT, true)
+                            .term(ShutterBlock.BLOCKED_RIGHT, true),
+                    Variant.variant()
+                            .with(VariantProperties.MODEL, leftBlockedModel) // TODO: actually make model for this
+                            .with(VariantProperties.Y_ROT, yRot)
+            );
+        }
+
+        generator.blockStateOutput.accept(multipart);
     }
 
     @Override

@@ -52,6 +52,8 @@ public class ShutterBlock extends Block implements SimpleWaterloggedBlock {
     protected static final VoxelShape EAST_OPEN_SHAPE = Shapes.or(Block.box(0.0D, 0.0D, -6.0D, 2.0D, 16.0D, 2.0D), Block.box(0.0D, 0.0D, 14.0D, 2.0D, 16.0D, 22.0D));
     protected static final VoxelShape WEST_OPEN_SHAPE = Shapes.or(Block.box(14.0D, 0.0D, -6.0D, 16.0D, 16.0D, 2.0D), Block.box(14.0D, 0.0D, 14.0D, 16.0D, 16.0D, 22.0D));
 
+    public final BlockSetType type;
+
     public ShutterBlock(BlockSetType type, Properties properties) {
         super(properties);
         this.type = type;
