@@ -135,12 +135,12 @@ public class ModModelProvider extends FabricModelProvider {
     @Override
     public void generateItemModels(ItemModelGenerators generator) {
         ModRegistry.ITEMS.forEach((name, itemSupplier) -> {
-            ResourceLocation blockTexture = ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "block/" + name);
+            ResourceLocation itemTexture = ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "item/" + name);
 
             ResourceLocation parent = ResourceLocation.parse("item/generated");
 
             new ModelTemplate(Optional.of(parent), Optional.empty(), TextureSlot.LAYER0)
-                    .create(ModelLocationUtils.getModelLocation(itemSupplier.get()), TextureMapping.layer0(blockTexture), generator.output);
+                    .create(ModelLocationUtils.getModelLocation(itemSupplier.get()), TextureMapping.layer0(itemTexture), generator.output);
         });
     }
 }

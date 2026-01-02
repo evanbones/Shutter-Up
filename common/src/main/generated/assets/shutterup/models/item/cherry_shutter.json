@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "shutterup:block/cherry_shutter"
+    "layer0": "shutterup:item/cherry_shutter"
   }
 }

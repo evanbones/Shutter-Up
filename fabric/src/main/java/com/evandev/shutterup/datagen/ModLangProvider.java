@@ -15,6 +15,7 @@ public class ModLangProvider extends FabricLanguageProvider {
     @Override
     public void generateTranslations(HolderLookup.Provider registryLookup, TranslationBuilder translationBuilder) {
         translationBuilder.add("itemGroup.shutterup", "Shutter Up");
+        translationBuilder.add("block_type.shutterup.shutter", "%s Shutter");
 
         ModRegistry.BLOCKS.forEach((name, blockSupplier) -> {
             String readableName = name.replace('_', ' ');

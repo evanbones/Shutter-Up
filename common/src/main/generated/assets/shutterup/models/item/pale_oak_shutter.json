@@ -1,6 +1,6 @@
 {
   "parent": "minecraft:item/generated",
   "textures": {
-    "layer0": "shutterup:block/pale_oak_shutter"
+    "layer0": "shutterup:item/pale_oak_shutter"
   }
 }

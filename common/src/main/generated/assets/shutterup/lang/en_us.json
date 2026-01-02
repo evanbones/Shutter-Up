@@ -11,5 +11,6 @@
   "block.shutterup.pale_oak_shutter": "Pale Oak Shutter",
   "block.shutterup.spruce_shutter": "Spruce Shutter",
   "block.shutterup.warped_shutter": "Warped Shutter",
+  "block_type.shutterup.shutter": "%s Shutter",
   "itemGroup.shutterup": "Shutter Up"
 }
