@@ -1,6 +1,0 @@
-{
-  "parent": "shutterup:block/template_shutter_open_left_blocked",
-  "textures": {
-    "texture": "shutterup:block/pale_oak_shutter"
-  }
-}
