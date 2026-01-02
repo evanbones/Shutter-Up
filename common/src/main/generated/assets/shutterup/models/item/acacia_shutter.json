@@ -1,3 +1,6 @@
 {
-  "parent": "shutterup:block/acacia_shutter"
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "shutterup:block/acacia_shutter"
+  }
 }

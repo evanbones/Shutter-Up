@@ -9,5 +9,6 @@ public class ShutterUpDataGenerator implements DataGeneratorEntrypoint {
         FabricDataGenerator.Pack pack = fabricDataGenerator.createPack();
 
         pack.addProvider(ModModelProvider::new);
+        pack.addProvider(ModLangProvider::new);
     }
 }

@@ -1,3 +1,6 @@
 {
-  "parent": "shutterup:block/jungle_shutter"
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "shutterup:block/jungle_shutter"
+  }
 }

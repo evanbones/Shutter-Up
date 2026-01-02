@@ -1,3 +1,6 @@
 {
-  "parent": "shutterup:block/warped_shutter"
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "shutterup:block/warped_shutter"
+  }
 }

@@ -12,9 +12,7 @@ import net.minecraft.data.models.blockstates.MultiVariantGenerator;
 import net.minecraft.data.models.blockstates.PropertyDispatch;
 import net.minecraft.data.models.blockstates.Variant;
 import net.minecraft.data.models.blockstates.VariantProperties;
-import net.minecraft.data.models.model.ModelTemplate;
-import net.minecraft.data.models.model.TextureMapping;
-import net.minecraft.data.models.model.TextureSlot;
+import net.minecraft.data.models.model.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 
@@ -42,12 +40,6 @@ public class ModModelProvider extends FabricModelProvider {
             Block block = blockSupplier.get();
             if (block instanceof ShutterBlock) {
                 generateShutter(generator, block, TEMPLATE_CLOSED, TEMPLATE_OPEN);
-
-                ResourceLocation itemModelLocation = ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "item/" + name);
-                ResourceLocation blockModelLocation = ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "block/" + name);
-
-                new ModelTemplate(Optional.of(blockModelLocation), Optional.empty())
-                        .create(itemModelLocation, new TextureMapping(), generator.modelOutput);
             }
         });
     }
@@ -76,6 +68,13 @@ public class ModModelProvider extends FabricModelProvider {
 
     @Override
     public void generateItemModels(ItemModelGenerators generator) {
+        ModRegistry.ITEMS.forEach((name, itemSupplier) -> {
+            ResourceLocation blockTexture = ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "block/" + name);
 
+            ResourceLocation parent = ResourceLocation.parse("item/generated");
+
+            new ModelTemplate(Optional.of(parent), Optional.empty(), TextureSlot.LAYER0)
+                    .create(ModelLocationUtils.getModelLocation(itemSupplier.get()), TextureMapping.layer0(blockTexture), generator.output);
+        });
     }
 }
