@@ -1,0 +1,6 @@
+{
+  "parent": "shutterup:block/template_shutter_closed",
+  "textures": {
+    "texture": "shutterup:block/crimson_shutter"
+  }
+}

@@ -18,7 +18,6 @@ public class ModRegistry {
     public static final Map<String, Supplier<Block>> BLOCKS = new LinkedHashMap<>();
     public static final Map<String, Supplier<Item>> ITEMS = new LinkedHashMap<>();
 
-    // Define all your shutters here
     public static final Supplier<Block> ACACIA_SHUTTER = registerBlock("acacia_shutter", BlockSetType.ACACIA);
     public static final Supplier<Block> BAMBOO_SHUTTER = registerBlock("bamboo_shutter", BlockSetType.BAMBOO);
     public static final Supplier<Block> BIRCH_SHUTTER = registerBlock("birch_shutter", BlockSetType.BIRCH);
@@ -33,11 +32,30 @@ public class ModRegistry {
     public static final Supplier<Block> WARPED_SHUTTER = registerBlock("warped_shutter", BlockSetType.WARPED);
 
     private static Supplier<Block> registerBlock(String name, BlockSetType type) {
-        Supplier<Block> blockSupplier = () -> new ShutterBlock(type, BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_TRAPDOOR).noOcclusion());
+        Supplier<Block> blockSupplier = new Supplier<>() {
+            private Block instance;
+            @Override
+            public Block get() {
+                if (instance == null) {
+                    instance = new ShutterBlock(type, BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_TRAPDOOR).noOcclusion());
+                }
+                return instance;
+            }
+        };
+
+        Supplier<Item> itemSupplier = new Supplier<>() {
+            private Item instance;
+            @Override
+            public Item get() {
+                if (instance == null) {
+                    instance = new BlockItem(blockSupplier.get(), new Item.Properties());
+                }
+                return instance;
+            }
+        };
 
         BLOCKS.put(name, blockSupplier);
-
-        ITEMS.put(name, () -> new BlockItem(blockSupplier.get(), new Item.Properties()));
+        ITEMS.put(name, itemSupplier);
 
         return blockSupplier;
     }
