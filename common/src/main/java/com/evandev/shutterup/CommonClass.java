@@ -2,6 +2,7 @@ package com.evandev.shutterup;
 
 import com.evandev.shutterup.compat.ShutterUpEveryCompat;
 import com.evandev.shutterup.platform.Services;
+import net.mehvahdjukaar.every_compat.api.EveryCompatAPI;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
@@ -16,6 +17,7 @@ public class CommonClass {
 
     public static void init() {
         if (Services.PLATFORM.isModLoaded("everycomp")) {
+            EveryCompatAPI.registerModule(new ShutterUpEveryCompat());
         }
     }
 

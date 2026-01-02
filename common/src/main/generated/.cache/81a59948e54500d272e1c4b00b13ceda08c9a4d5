@@ -1,4 +1,4 @@
-// 1.21.1	2026-01-02T03:50:09.1780412	ShutterUp/Model Definitions
+// 1.21.1	2026-01-02T04:02:28.3030257	ShutterUp/Model Definitions
 15f39e29558c5798a2d7c6aaa45a7748f367a712 assets\shutterup\models\block\mangrove_shutter_open_right_blocked.json
 31024ab41b5ca2e8bf537f80505a8f728c61d313 assets\shutterup\models\block\jungle_shutter_open_left_blocked.json
 c3fbe4163db5024559915acaf418dcfd1bb28bb7 assets\shutterup\models\block\pale_oak_shutter_open_both_blocked.json
@@ -60,8 +60,8 @@ b995dc9cc4dff2d9e622fa810774949f8e37f045 assets\shutterup\models\block\crimson_s
 18eee0a0f5e476d648ca51b51ce0560bb0a12c34 assets\shutterup\models\block\warped_shutter.json
 b75c01aa3afd1448f055406d301206e5050725f8 assets\shutterup\models\block\spruce_shutter_open_both_blocked.json
 56e7ec2537ba6a82db092b6a983ba151a876769b assets\shutterup\models\block\oak_shutter.json
-b4e51c3684a20bedbd4fad08d61b74179cb86bca assets\shutterup\models\item\jungle_shutter.json
 a3a6ca147cf3743d8f846ba64878c57bf7587819 assets\shutterup\blockstates\cherry_shutter.json
+b4e51c3684a20bedbd4fad08d61b74179cb86bca assets\shutterup\models\item\jungle_shutter.json
 9b2cc767184bb779918ace6c85b8d1f769115b4c assets\shutterup\models\block\jungle_shutter_open_both_blocked.json
 9278ab0e82c522bbd347f0216f3ecd5382a1c35d assets\shutterup\models\block\acacia_shutter.json
 01a270f140693263cee9e761d54ce214a6c93ed3 assets\shutterup\models\block\jungle_shutter_open.json

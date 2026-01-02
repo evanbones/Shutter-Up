@@ -31,8 +31,8 @@ dependencies {
     annotationProcessor group: 'io.github.llamalad7', name: 'mixinextras-common', version: '0.3.5'
 
     // Every Compat
-    compileOnly "maven.modrinth:moonlight:${moonlight_version}-fabric"
-    compileOnly "maven.modrinth:every-compat:${every_compat_version}-fabric"
+    compileOnly "maven.modrinth:moonlight:${moonlight_version}-neoforge"
+    compileOnly "maven.modrinth:every-compat:${every_compat_version}-neoforge"
 }
 
 sourceSets.main.resources.srcDir 'src/main/generated'
