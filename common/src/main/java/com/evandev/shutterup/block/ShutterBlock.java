@@ -52,6 +52,22 @@ public class ShutterBlock extends Block implements SimpleWaterloggedBlock {
     protected static final VoxelShape EAST_OPEN_SHAPE = Shapes.or(Block.box(0.0D, 0.0D, -6.0D, 2.0D, 16.0D, 2.0D), Block.box(0.0D, 0.0D, 14.0D, 2.0D, 16.0D, 22.0D));
     protected static final VoxelShape WEST_OPEN_SHAPE = Shapes.or(Block.box(14.0D, 0.0D, -6.0D, 16.0D, 16.0D, 2.0D), Block.box(14.0D, 0.0D, 14.0D, 16.0D, 16.0D, 22.0D));
 
+    protected static final VoxelShape NORTH_OPEN_LEFT_BLOCKED_SHAPE = Shapes.or(Block.box(0.0D, 0.0D, 6.0D, 2.0D, 16.0D, 14.0D), Block.box(14.0D, 0.0D, 14.0D, 22.0D, 16.0D, 16.0D));
+    protected static final VoxelShape NORTH_OPEN_RIGHT_BLOCKED_SHAPE = Shapes.or(Block.box(-6.0D, 0.0D, 14.0D, 2.0D, 16.0D, 16.0D), Block.box(14.0D, 0.0D, 6.0D, 16.0D, 16.0D, 14.0D));
+    protected static final VoxelShape NORTH_OPEN_BOTH_BLOCKED_SHAPE = Shapes.or(Block.box(0.0D, 0.0D, 6.0D, 2.0D, 16.0D, 14.0D), Block.box(14.0D, 0.0D, 6.0D, 16.0D, 16.0D, 14.0D));
+
+    protected static final VoxelShape SOUTH_OPEN_LEFT_BLOCKED_SHAPE = Shapes.or(Block.box(14.0D, 0.0D, 2.0D, 16.0D, 16.0D, 10.0D), Block.box(-6.0D, 0.0D, 0.0D, 2.0D, 16.0D, 2.0D));
+    protected static final VoxelShape SOUTH_OPEN_RIGHT_BLOCKED_SHAPE = Shapes.or(Block.box(14.0D, 0.0D, 0.0D, 22.0D, 16.0D, 2.0D), Block.box(0.0D, 0.0D, 2.0D, 2.0D, 16.0D, 10.0D));
+    protected static final VoxelShape SOUTH_OPEN_BOTH_BLOCKED_SHAPE = Shapes.or(Block.box(14.0D, 0.0D, 2.0D, 16.0D, 16.0D, 10.0D), Block.box(0.0D, 0.0D, 2.0D, 2.0D, 16.0D, 10.0D));
+
+    protected static final VoxelShape EAST_OPEN_LEFT_BLOCKED_SHAPE = Shapes.or(Block.box(2.0D, 0.0D, 0.0D, 10.0D, 16.0D, 2.0D), Block.box(0.0D, 0.0D, 14.0D, 2.0D, 16.0D, 22.0D));
+    protected static final VoxelShape EAST_OPEN_RIGHT_BLOCKED_SHAPE = Shapes.or(Block.box(0.0D, 0.0D, -6.0D, 2.0D, 16.0D, 2.0D), Block.box(2.0D, 0.0D, 14.0D, 10.0D, 16.0D, 16.0D));
+    protected static final VoxelShape EAST_OPEN_BOTH_BLOCKED_SHAPE = Shapes.or(Block.box(2.0D, 0.0D, 0.0D, 10.0D, 16.0D, 2.0D), Block.box(2.0D, 0.0D, 14.0D, 10.0D, 16.0D, 16.0D));
+
+    protected static final VoxelShape WEST_OPEN_LEFT_BLOCKED_SHAPE = Shapes.or(Block.box(6.0D, 0.0D, 14.0D, 14.0D, 16.0D, 16.0D), Block.box(14.0D, 0.0D, -6.0D, 16.0D, 16.0D, 2.0D));
+    protected static final VoxelShape WEST_OPEN_RIGHT_BLOCKED_SHAPE = Shapes.or(Block.box(14.0D, 0.0D, 14.0D, 16.0D, 16.0D, 22.0D), Block.box(6.0D, 0.0D, 0.0D, 14.0D, 16.0D, 2.0D));
+    protected static final VoxelShape WEST_OPEN_BOTH_BLOCKED_SHAPE = Shapes.or(Block.box(6.0D, 0.0D, 14.0D, 14.0D, 16.0D, 16.0D), Block.box(6.0D, 0.0D, 0.0D, 14.0D, 16.0D, 2.0D));
+
     public final BlockSetType type;
 
     public ShutterBlock(BlockSetType type, Properties properties) {
@@ -74,13 +90,41 @@ public class ShutterBlock extends Block implements SimpleWaterloggedBlock {
     @Override
     public @NotNull VoxelShape getShape(BlockState state, @NotNull BlockGetter level, @NotNull BlockPos pos, @NotNull CollisionContext context) {
         if (state.getValue(OPEN)) {
-            return switch (state.getValue(FACING)) {
+            Direction facing = state.getValue(FACING);
+            boolean left = state.getValue(BLOCKED_LEFT);
+            boolean right = state.getValue(BLOCKED_RIGHT);
+
+            if (left && right) {
+                return switch (facing) {
+                    case SOUTH -> SOUTH_OPEN_BOTH_BLOCKED_SHAPE;
+                    case EAST -> EAST_OPEN_BOTH_BLOCKED_SHAPE;
+                    case WEST -> WEST_OPEN_BOTH_BLOCKED_SHAPE;
+                    default -> NORTH_OPEN_BOTH_BLOCKED_SHAPE;
+                };
+            } else if (left) {
+                return switch (facing) {
+                    case SOUTH -> SOUTH_OPEN_LEFT_BLOCKED_SHAPE;
+                    case EAST -> EAST_OPEN_LEFT_BLOCKED_SHAPE;
+                    case WEST -> WEST_OPEN_LEFT_BLOCKED_SHAPE;
+                    default -> NORTH_OPEN_LEFT_BLOCKED_SHAPE;
+                };
+            } else if (right) {
+                return switch (facing) {
+                    case SOUTH -> SOUTH_OPEN_RIGHT_BLOCKED_SHAPE;
+                    case EAST -> EAST_OPEN_RIGHT_BLOCKED_SHAPE;
+                    case WEST -> WEST_OPEN_RIGHT_BLOCKED_SHAPE;
+                    default -> NORTH_OPEN_RIGHT_BLOCKED_SHAPE;
+                };
+            }
+
+            return switch (facing) {
                 case SOUTH -> SOUTH_OPEN_SHAPE;
                 case EAST -> EAST_OPEN_SHAPE;
                 case WEST -> WEST_OPEN_SHAPE;
                 default -> NORTH_OPEN_SHAPE;
             };
         }
+
         return switch (state.getValue(FACING)) {
             case SOUTH -> SOUTH_SHAPE;
             case EAST -> EAST_SHAPE;

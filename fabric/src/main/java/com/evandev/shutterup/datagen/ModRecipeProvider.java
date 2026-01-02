@@ -25,10 +25,9 @@ public class ModRecipeProvider extends FabricRecipeProvider {
             Item plankItem = BuiltInRegistries.ITEM.get(ResourceLocation.withDefaultNamespace(plankName));
 
             if (plankItem != Items.AIR) {
-                ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, itemSupplier.get(), 4)
-                        .pattern(" P ")
-                        .pattern(" P ")
-                        .pattern(" P ")
+                ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, itemSupplier.get(), 2)
+                        .pattern("P P")
+                        .pattern("P P")
                         .define('P', plankItem)
                         .unlockedBy("has_planks", has(plankItem))
                         .save(exporter);

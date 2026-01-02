@@ -48,7 +48,7 @@
     },
     {
       "apply": {
-        "model": "shutterup:block/birch_shutter_open_left_blocked",
+        "model": "shutterup:block/birch_shutter_open_both_blocked",
         "y": 0
       },
       "when": {
@@ -106,7 +106,7 @@
     },
     {
       "apply": {
-        "model": "shutterup:block/birch_shutter_open_left_blocked",
+        "model": "shutterup:block/birch_shutter_open_both_blocked",
         "y": 90
       },
       "when": {
@@ -164,7 +164,7 @@
     },
     {
       "apply": {
-        "model": "shutterup:block/birch_shutter_open_left_blocked",
+        "model": "shutterup:block/birch_shutter_open_both_blocked",
         "y": 180
       },
       "when": {
@@ -222,7 +222,7 @@
     },
     {
       "apply": {
-        "model": "shutterup:block/birch_shutter_open_left_blocked",
+        "model": "shutterup:block/birch_shutter_open_both_blocked",
         "y": 270
       },
       "when": {

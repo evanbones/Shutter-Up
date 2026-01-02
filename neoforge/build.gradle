@@ -3,6 +3,20 @@ plugins {
     id 'net.neoforged.moddev'
 }
 
+repositories {
+    maven {
+        name = "Modrinth"
+        url = "https://api.modrinth.com/maven"
+        content {
+            includeGroup "maven.modrinth"
+        }
+    }
+    maven {
+        name = "TerraformersMC"
+        url = "https://maven.terraformersmc.com/"
+    }
+}
+
 neoForge {
     version = neoforge_version
     def at = project(':common').file('src/main/resources/META-INF/accesstransformer.cfg')
@@ -30,4 +44,15 @@ neoForge {
             sourceSet sourceSets.main
         }
     }
+}
+
+dependencies {
+    implementation "net.neoforged:neoforge:${neoforge_version}"
+
+    // Every Compat
+    implementation "maven.modrinth:moonlight:${moonlight_version}-neoforge"
+    implementation "maven.modrinth:every-compat:${every_compat_version}-neoforge"
+
+    // EMI
+    runtimeOnly "dev.emi:emi-neoforge:${emi_version}"
 }

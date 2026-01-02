@@ -43,21 +43,27 @@ public class ModModelProvider extends FabricModelProvider {
                 TextureSlot.TEXTURE
         );
 
+        ModelTemplate TEMPLATE_OPEN_BOTH_BLOCKED = new ModelTemplate(
+                Optional.of(ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "block/template_shutter_open_both_blocked")),
+                Optional.empty(),
+                TextureSlot.TEXTURE
+        );
+
         ModRegistry.BLOCKS.forEach((name, blockSupplier) -> {
             Block block = blockSupplier.get();
             if (block instanceof ShutterBlock) {
-                generateShutter(generator, block, TEMPLATE_CLOSED, TEMPLATE_OPEN, TEMPLATE_OPEN_LEFT_BLOCKED, TEMPLATE_OPEN_RIGHT_BLOCKED);
+                generateShutter(generator, block, TEMPLATE_CLOSED, TEMPLATE_OPEN, TEMPLATE_OPEN_LEFT_BLOCKED, TEMPLATE_OPEN_RIGHT_BLOCKED, TEMPLATE_OPEN_BOTH_BLOCKED);
             }
         });
     }
 
-    private void generateShutter(BlockModelGenerators generator, Block block, ModelTemplate closedTemplate, ModelTemplate openTemplate, ModelTemplate leftBlockedTemplate, ModelTemplate rightBlockedTemplate) {
-        TextureMapping textureMapping = TextureMapping.defaultTexture(block);
+    private void generateShutter(BlockModelGenerators generator, Block block, ModelTemplate closedTemplate, ModelTemplate openTemplate, ModelTemplate leftBlockedTemplate, ModelTemplate rightBlockedTemplate, ModelTemplate bothBlockedTemplate) {        TextureMapping textureMapping = TextureMapping.defaultTexture(block);
 
         ResourceLocation closedModel = closedTemplate.create(block, textureMapping, generator.modelOutput);
         ResourceLocation openModel = openTemplate.createWithSuffix(block, "_open", textureMapping, generator.modelOutput);
         ResourceLocation leftBlockedModel = leftBlockedTemplate.createWithSuffix(block, "_open_left_blocked", textureMapping, generator.modelOutput);
         ResourceLocation rightBlockedModel = rightBlockedTemplate.createWithSuffix(block, "_open_right_blocked", textureMapping, generator.modelOutput);
+        ResourceLocation bothBlockedModel = bothBlockedTemplate.createWithSuffix(block, "_open_both_blocked", textureMapping, generator.modelOutput);
 
         MultiPartGenerator multipart = MultiPartGenerator.multiPart(block);
 
@@ -69,7 +75,6 @@ public class ModModelProvider extends FabricModelProvider {
                 default -> VariantProperties.Rotation.R0;
             };
 
-            // 1. Closed State
             multipart.with(
                     Condition.condition()
                             .term(ShutterBlock.FACING, dir)
@@ -79,7 +84,6 @@ public class ModModelProvider extends FabricModelProvider {
                             .with(VariantProperties.Y_ROT, yRot)
             );
 
-            // 2. Open State - Normal
             multipart.with(
                     Condition.condition()
                             .term(ShutterBlock.FACING, dir)
@@ -91,7 +95,6 @@ public class ModModelProvider extends FabricModelProvider {
                             .with(VariantProperties.Y_ROT, yRot)
             );
 
-            // 3. Open State - Left Blocked
             multipart.with(
                     Condition.condition()
                             .term(ShutterBlock.FACING, dir)
@@ -103,7 +106,6 @@ public class ModModelProvider extends FabricModelProvider {
                             .with(VariantProperties.Y_ROT, yRot)
             );
 
-            // 4. Open State - Right Blocked
             multipart.with(
                     Condition.condition()
                             .term(ShutterBlock.FACING, dir)
@@ -115,7 +117,6 @@ public class ModModelProvider extends FabricModelProvider {
                             .with(VariantProperties.Y_ROT, yRot)
             );
 
-            // 5. Open State - Both Blocked
             multipart.with(
                     Condition.condition()
                             .term(ShutterBlock.FACING, dir)
@@ -123,7 +124,7 @@ public class ModModelProvider extends FabricModelProvider {
                             .term(ShutterBlock.BLOCKED_LEFT, true)
                             .term(ShutterBlock.BLOCKED_RIGHT, true),
                     Variant.variant()
-                            .with(VariantProperties.MODEL, leftBlockedModel) // TODO: actually make model for this
+                            .with(VariantProperties.MODEL, bothBlockedModel)
                             .with(VariantProperties.Y_ROT, yRot)
             );
         }
