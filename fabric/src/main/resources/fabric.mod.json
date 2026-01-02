@@ -17,6 +17,9 @@
     "entrypoints": {
         "main": [
             "com.evandev.shutterup.ShutterUp"
+        ],
+        "fabric-datagen": [
+            "com.evandev.shutterup.datagen.ShutterUpDataGenerator"
         ]
     },
     "mixins": [

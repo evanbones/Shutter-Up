@@ -25,8 +25,7 @@ import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
-
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 public class ShutterBlock extends Block implements SimpleWaterloggedBlock {
     public static final MapCodec<ShutterBlock> CODEC = RecordCodecBuilder.mapCodec(instance ->
