@@ -10,6 +10,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import net.minecraft.world.level.block.state.BlockState;
@@ -38,31 +39,18 @@ public class ShutterBlock extends Block implements SimpleWaterloggedBlock {
     public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
 
-    protected final BlockSetType type;
+    public static final BooleanProperty BLOCKED_LEFT = BooleanProperty.create("blocked_left");
+    public static final BooleanProperty BLOCKED_RIGHT = BooleanProperty.create("blocked_right");
 
-    // Closed Shapes
     protected static final VoxelShape NORTH_SHAPE = Block.box(0.0D, 0.0D, 14.0D, 16.0D, 16.0D, 16.0D);
     protected static final VoxelShape SOUTH_SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 2.0D);
     protected static final VoxelShape EAST_SHAPE = Block.box(0.0D, 0.0D, 0.0D, 2.0D, 16.0D, 16.0D);
     protected static final VoxelShape WEST_SHAPE = Block.box(14.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D);
 
-    // Open Shapes
-    protected static final VoxelShape NORTH_OPEN_SHAPE = Shapes.or(
-            Block.box(-6.0D, 0.0D, 14.0D, 2.0D, 16.0D, 16.0D),
-            Block.box(14.0D, 0.0D, 14.0D, 22.0D, 16.0D, 16.0D)
-    );
-    protected static final VoxelShape SOUTH_OPEN_SHAPE = Shapes.or(
-            Block.box(-6.0D, 0.0D, 0.0D, 2.0D, 16.0D, 2.0D),
-            Block.box(14.0D, 0.0D, 0.0D, 22.0D, 16.0D, 2.0D)
-    );
-    protected static final VoxelShape EAST_OPEN_SHAPE = Shapes.or(
-            Block.box(0.0D, 0.0D, -6.0D, 2.0D, 16.0D, 2.0D),
-            Block.box(0.0D, 0.0D, 14.0D, 2.0D, 16.0D, 22.0D)
-    );
-    protected static final VoxelShape WEST_OPEN_SHAPE = Shapes.or(
-            Block.box(14.0D, 0.0D, -6.0D, 16.0D, 16.0D, 2.0D),
-            Block.box(14.0D, 0.0D, 14.0D, 16.0D, 16.0D, 22.0D)
-    );
+    protected static final VoxelShape NORTH_OPEN_SHAPE = Shapes.or(Block.box(-6.0D, 0.0D, 14.0D, 2.0D, 16.0D, 16.0D), Block.box(14.0D, 0.0D, 14.0D, 22.0D, 16.0D, 16.0D));
+    protected static final VoxelShape SOUTH_OPEN_SHAPE = Shapes.or(Block.box(-6.0D, 0.0D, 0.0D, 2.0D, 16.0D, 2.0D), Block.box(14.0D, 0.0D, 0.0D, 22.0D, 16.0D, 2.0D));
+    protected static final VoxelShape EAST_OPEN_SHAPE = Shapes.or(Block.box(0.0D, 0.0D, -6.0D, 2.0D, 16.0D, 2.0D), Block.box(0.0D, 0.0D, 14.0D, 2.0D, 16.0D, 22.0D));
+    protected static final VoxelShape WEST_OPEN_SHAPE = Shapes.or(Block.box(14.0D, 0.0D, -6.0D, 16.0D, 16.0D, 2.0D), Block.box(14.0D, 0.0D, 14.0D, 16.0D, 16.0D, 22.0D));
 
     public ShutterBlock(BlockSetType type, Properties properties) {
         super(properties);
@@ -71,7 +59,9 @@ public class ShutterBlock extends Block implements SimpleWaterloggedBlock {
                 .setValue(FACING, Direction.NORTH)
                 .setValue(OPEN, false)
                 .setValue(POWERED, false)
-                .setValue(WATERLOGGED, false));
+                .setValue(WATERLOGGED, false)
+                .setValue(BLOCKED_LEFT, false)
+                .setValue(BLOCKED_RIGHT, false));
     }
 
     @Override
@@ -110,10 +100,31 @@ public class ShutterBlock extends Block implements SimpleWaterloggedBlock {
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
         FluidState fluidState = context.getLevel().getFluidState(context.getClickedPos());
-        return this.defaultBlockState()
+        BlockState state = this.defaultBlockState()
                 .setValue(FACING, context.getHorizontalDirection().getOpposite())
                 .setValue(WATERLOGGED, fluidState.getType() == Fluids.WATER)
                 .setValue(POWERED, context.getLevel().hasNeighborSignal(context.getClickedPos()));
+
+        return calculateBlockedState(state, context.getLevel(), context.getClickedPos());
+    }
+
+    @Override
+    protected BlockState updateShape(BlockState state, @NotNull Direction direction, @NotNull BlockState neighborState, @NotNull LevelAccessor level, @NotNull BlockPos currentPos, @NotNull BlockPos neighborPos) {
+        if (state.getValue(WATERLOGGED)) {
+            level.scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickDelay(level));
+        }
+        return calculateBlockedState(state, level, currentPos);
+    }
+
+    private BlockState calculateBlockedState(BlockState state, LevelAccessor level, BlockPos pos) {
+        Direction facing = state.getValue(FACING);
+        Direction leftDir = facing.getCounterClockWise();
+        Direction rightDir = facing.getClockWise();
+
+        boolean blockedLeft = !level.getBlockState(pos.relative(leftDir)).getCollisionShape(level, pos.relative(leftDir)).isEmpty();
+        boolean blockedRight = !level.getBlockState(pos.relative(rightDir)).getCollisionShape(level, pos.relative(rightDir)).isEmpty();
+
+        return state.setValue(BLOCKED_LEFT, blockedLeft).setValue(BLOCKED_RIGHT, blockedRight);
     }
 
     @Override
@@ -136,7 +147,7 @@ public class ShutterBlock extends Block implements SimpleWaterloggedBlock {
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(FACING, OPEN, POWERED, WATERLOGGED);
+        builder.add(FACING, OPEN, POWERED, WATERLOGGED, BLOCKED_LEFT, BLOCKED_RIGHT);
     }
 
     @Override

@@ -1,12 +1,16 @@
 package com.evandev.shutterup;
 
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.bus.api.IEventBus;
+import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
+import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 @Mod(Constants.MOD_ID)
@@ -23,6 +27,7 @@ public class ShutterUp {
         ITEM_REGISTER.register(eventBus);
 
         eventBus.addListener(this::addCreative);
+        NeoForge.EVENT_BUS.register(this);
 
         CommonClass.init();
     }
@@ -30,6 +35,15 @@ public class ShutterUp {
     private void addCreative(BuildCreativeModeTabContentsEvent event) {
         if (event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS) {
             ModRegistry.ITEMS.forEach((name, itemSupplier) -> event.accept(itemSupplier.get()));
+        }
+    }
+
+    @SubscribeEvent
+    public void onRightClickBlock(PlayerInteractEvent.RightClickBlock event) {
+        InteractionResult result = CommonClass.onRightClickBlock(event.getEntity(), event.getLevel(), event.getHand(), event.getHitVec());
+        if (result == InteractionResult.SUCCESS) {
+            event.setCanceled(true);
+            event.setCancellationResult(InteractionResult.SUCCESS);
         }
     }
 }
