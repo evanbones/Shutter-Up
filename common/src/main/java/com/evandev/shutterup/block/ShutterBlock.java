@@ -1,7 +1,5 @@
 package com.evandev.shutterup.block;
 
-import com.mojang.serialization.MapCodec;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundSource;
@@ -30,10 +28,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class ShutterBlock extends Block implements SimpleWaterloggedBlock {
-    public static final MapCodec<ShutterBlock> CODEC = RecordCodecBuilder.mapCodec(instance ->
-            instance.group(BlockSetType.CODEC.fieldOf("set_type").forGetter(b -> b.type), propertiesCodec())
-                    .apply(instance, ShutterBlock::new));
-
     public static final EnumProperty<Direction> FACING = BlockStateProperties.HORIZONTAL_FACING;
     public static final BooleanProperty OPEN = BlockStateProperties.OPEN;
     public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
@@ -52,21 +46,21 @@ public class ShutterBlock extends Block implements SimpleWaterloggedBlock {
     protected static final VoxelShape EAST_OPEN_SHAPE = Shapes.or(Block.box(0.0D, 0.0D, -6.0D, 2.0D, 16.0D, 2.0D), Block.box(0.0D, 0.0D, 14.0D, 2.0D, 16.0D, 22.0D));
     protected static final VoxelShape WEST_OPEN_SHAPE = Shapes.or(Block.box(14.0D, 0.0D, -6.0D, 16.0D, 16.0D, 2.0D), Block.box(14.0D, 0.0D, 14.0D, 16.0D, 16.0D, 22.0D));
 
-    protected static final VoxelShape NORTH_OPEN_LEFT_BLOCKED_SHAPE = Shapes.or(Block.box(0.0D, 0.0D, 6.0D, 2.0D, 16.0D, 14.0D), Block.box(14.0D, 0.0D, 14.0D, 22.0D, 16.0D, 16.0D));
-    protected static final VoxelShape NORTH_OPEN_RIGHT_BLOCKED_SHAPE = Shapes.or(Block.box(-6.0D, 0.0D, 14.0D, 2.0D, 16.0D, 16.0D), Block.box(14.0D, 0.0D, 6.0D, 16.0D, 16.0D, 14.0D));
-    protected static final VoxelShape NORTH_OPEN_BOTH_BLOCKED_SHAPE = Shapes.or(Block.box(0.0D, 0.0D, 6.0D, 2.0D, 16.0D, 14.0D), Block.box(14.0D, 0.0D, 6.0D, 16.0D, 16.0D, 14.0D));
+    protected static final VoxelShape NORTH_OPEN_LEFT_BLOCKED_SHAPE = Shapes.or(Block.box(0.0D, 0.0D, 8.0D, 2.0D, 16.0D, 16.0D), Block.box(14.0D, 0.0D, 14.0D, 22.0D, 16.0D, 16.0D));
+    protected static final VoxelShape NORTH_OPEN_RIGHT_BLOCKED_SHAPE = Shapes.or(Block.box(-6.0D, 0.0D, 14.0D, 2.0D, 16.0D, 16.0D), Block.box(14.0D, 0.0D, 8.0D, 16.0D, 16.0D, 16.0D));
+    protected static final VoxelShape NORTH_OPEN_BOTH_BLOCKED_SHAPE = Shapes.or(Block.box(0.0D, 0.0D, 8.0D, 2.0D, 16.0D, 16.0D), Block.box(14.0D, 0.0D, 8.0D, 16.0D, 16.0D, 16.0D));
 
-    protected static final VoxelShape SOUTH_OPEN_LEFT_BLOCKED_SHAPE = Shapes.or(Block.box(14.0D, 0.0D, 2.0D, 16.0D, 16.0D, 10.0D), Block.box(-6.0D, 0.0D, 0.0D, 2.0D, 16.0D, 2.0D));
-    protected static final VoxelShape SOUTH_OPEN_RIGHT_BLOCKED_SHAPE = Shapes.or(Block.box(14.0D, 0.0D, 0.0D, 22.0D, 16.0D, 2.0D), Block.box(0.0D, 0.0D, 2.0D, 2.0D, 16.0D, 10.0D));
-    protected static final VoxelShape SOUTH_OPEN_BOTH_BLOCKED_SHAPE = Shapes.or(Block.box(14.0D, 0.0D, 2.0D, 16.0D, 16.0D, 10.0D), Block.box(0.0D, 0.0D, 2.0D, 2.0D, 16.0D, 10.0D));
+    protected static final VoxelShape SOUTH_OPEN_LEFT_BLOCKED_SHAPE = Shapes.or(Block.box(14.0D, 0.0D, 0.0D, 16.0D, 16.0D, 8.0D), Block.box(-6.0D, 0.0D, 0.0D, 2.0D, 16.0D, 2.0D));
+    protected static final VoxelShape SOUTH_OPEN_RIGHT_BLOCKED_SHAPE = Shapes.or(Block.box(14.0D, 0.0D, 0.0D, 22.0D, 16.0D, 2.0D), Block.box(0.0D, 0.0D, 0.0D, 2.0D, 16.0D, 8.0D));
+    protected static final VoxelShape SOUTH_OPEN_BOTH_BLOCKED_SHAPE = Shapes.or(Block.box(14.0D, 0.0D, 0.0D, 16.0D, 16.0D, 8.0D), Block.box(0.0D, 0.0D, 0.0D, 2.0D, 16.0D, 8.0D));
 
-    protected static final VoxelShape EAST_OPEN_LEFT_BLOCKED_SHAPE = Shapes.or(Block.box(2.0D, 0.0D, 0.0D, 10.0D, 16.0D, 2.0D), Block.box(0.0D, 0.0D, 14.0D, 2.0D, 16.0D, 22.0D));
-    protected static final VoxelShape EAST_OPEN_RIGHT_BLOCKED_SHAPE = Shapes.or(Block.box(0.0D, 0.0D, -6.0D, 2.0D, 16.0D, 2.0D), Block.box(2.0D, 0.0D, 14.0D, 10.0D, 16.0D, 16.0D));
-    protected static final VoxelShape EAST_OPEN_BOTH_BLOCKED_SHAPE = Shapes.or(Block.box(2.0D, 0.0D, 0.0D, 10.0D, 16.0D, 2.0D), Block.box(2.0D, 0.0D, 14.0D, 10.0D, 16.0D, 16.0D));
+    protected static final VoxelShape EAST_OPEN_LEFT_BLOCKED_SHAPE = Shapes.or(Block.box(0.0D, 0.0D, 0.0D, 8.0D, 16.0D, 2.0D), Block.box(0.0D, 0.0D, 14.0D, 2.0D, 16.0D, 22.0D));
+    protected static final VoxelShape EAST_OPEN_RIGHT_BLOCKED_SHAPE = Shapes.or(Block.box(0.0D, 0.0D, -6.0D, 2.0D, 16.0D, 2.0D), Block.box(0.0D, 0.0D, 14.0D, 8.0D, 16.0D, 16.0D));
+    protected static final VoxelShape EAST_OPEN_BOTH_BLOCKED_SHAPE = Shapes.or(Block.box(0.0D, 0.0D, 0.0D, 8.0D, 16.0D, 2.0D), Block.box(0.0D, 0.0D, 14.0D, 8.0D, 16.0D, 16.0D));
 
-    protected static final VoxelShape WEST_OPEN_LEFT_BLOCKED_SHAPE = Shapes.or(Block.box(6.0D, 0.0D, 14.0D, 14.0D, 16.0D, 16.0D), Block.box(14.0D, 0.0D, -6.0D, 16.0D, 16.0D, 2.0D));
-    protected static final VoxelShape WEST_OPEN_RIGHT_BLOCKED_SHAPE = Shapes.or(Block.box(14.0D, 0.0D, 14.0D, 16.0D, 16.0D, 22.0D), Block.box(6.0D, 0.0D, 0.0D, 14.0D, 16.0D, 2.0D));
-    protected static final VoxelShape WEST_OPEN_BOTH_BLOCKED_SHAPE = Shapes.or(Block.box(6.0D, 0.0D, 14.0D, 14.0D, 16.0D, 16.0D), Block.box(6.0D, 0.0D, 0.0D, 14.0D, 16.0D, 2.0D));
+    protected static final VoxelShape WEST_OPEN_LEFT_BLOCKED_SHAPE = Shapes.or(Block.box(8.0D, 0.0D, 14.0D, 16.0D, 16.0D, 16.0D), Block.box(14.0D, 0.0D, -6.0D, 16.0D, 16.0D, 2.0D));
+    protected static final VoxelShape WEST_OPEN_RIGHT_BLOCKED_SHAPE = Shapes.or(Block.box(14.0D, 0.0D, 14.0D, 16.0D, 16.0D, 22.0D), Block.box(8.0D, 0.0D, 0.0D, 16.0D, 16.0D, 2.0D));
+    protected static final VoxelShape WEST_OPEN_BOTH_BLOCKED_SHAPE = Shapes.or(Block.box(8.0D, 0.0D, 14.0D, 16.0D, 16.0D, 16.0D), Block.box(8.0D, 0.0D, 0.0D, 16.0D, 16.0D, 2.0D));
 
     public final BlockSetType type;
 
@@ -80,11 +74,6 @@ public class ShutterBlock extends Block implements SimpleWaterloggedBlock {
                 .setValue(WATERLOGGED, false)
                 .setValue(BLOCKED_LEFT, false)
                 .setValue(BLOCKED_RIGHT, false));
-    }
-
-    @Override
-    protected @NotNull MapCodec<? extends Block> codec() {
-        return CODEC;
     }
 
     @Override
@@ -134,9 +123,11 @@ public class ShutterBlock extends Block implements SimpleWaterloggedBlock {
     }
 
     @Override
-    protected @NotNull InteractionResult useWithoutItem(@NotNull BlockState state, Level level, @NotNull BlockPos pos, @NotNull Player player, @NotNull BlockHitResult hit) {
+    protected @NotNull InteractionResult useWithoutItem(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos, @NotNull Player player, @NotNull BlockHitResult hit) {
         state = state.cycle(OPEN);
+        state = calculateBlockedState(state, level, pos);
         level.setBlock(pos, state, 10);
+        updateDiagonalNeighbors(level, pos, state);
         level.playSound(player, pos, state.getValue(OPEN) ? this.type.doorOpen() : this.type.doorClose(), SoundSource.BLOCKS, 1.0F, level.getRandom().nextFloat() * 0.1F + 0.9F);
         level.gameEvent(player, state.getValue(OPEN) ? GameEvent.BLOCK_OPEN : GameEvent.BLOCK_CLOSE, pos);
         return InteractionResult.sidedSuccess(level.isClientSide);
@@ -155,7 +146,7 @@ public class ShutterBlock extends Block implements SimpleWaterloggedBlock {
     }
 
     @Override
-    protected BlockState updateShape(BlockState state, @NotNull Direction direction, @NotNull BlockState neighborState, @NotNull LevelAccessor level, @NotNull BlockPos currentPos, @NotNull BlockPos neighborPos) {
+    public @NotNull BlockState updateShape(BlockState state, @NotNull Direction direction, @NotNull BlockState neighborState, @NotNull LevelAccessor level, @NotNull BlockPos currentPos, @NotNull BlockPos neighborPos) {
         if (state.getValue(WATERLOGGED)) {
             level.scheduleTick(currentPos, Fluids.WATER, Fluids.WATER.getTickDelay(level));
         }
@@ -170,11 +161,66 @@ public class ShutterBlock extends Block implements SimpleWaterloggedBlock {
         boolean blockedLeft = !level.getBlockState(pos.relative(leftDir)).getCollisionShape(level, pos.relative(leftDir)).isEmpty();
         boolean blockedRight = !level.getBlockState(pos.relative(rightDir)).getCollisionShape(level, pos.relative(rightDir)).isEmpty();
 
+        if (!blockedLeft) {
+            BlockPos leftDiagPos = pos.relative(leftDir).relative(facing.getOpposite());
+            BlockState leftDiagState = level.getBlockState(leftDiagPos);
+            if (leftDiagState.getBlock() instanceof ShutterBlock
+                    && leftDiagState.getValue(FACING) == leftDir
+                    && leftDiagState.getValue(OPEN)) {
+                blockedLeft = true;
+            }
+        }
+
+        if (!blockedRight) {
+            BlockPos rightDiagPos = pos.relative(rightDir).relative(facing.getOpposite());
+            BlockState rightDiagState = level.getBlockState(rightDiagPos);
+            if (rightDiagState.getBlock() instanceof ShutterBlock
+                    && rightDiagState.getValue(FACING) == rightDir
+                    && rightDiagState.getValue(OPEN)) {
+                blockedRight = true;
+            }
+        }
+
         return state.setValue(BLOCKED_LEFT, blockedLeft).setValue(BLOCKED_RIGHT, blockedRight);
     }
 
+    public void updateDiagonalNeighbors(Level level, BlockPos pos, BlockState state) {
+        Direction facing = state.getValue(FACING);
+        BlockPos leftDiagPos = pos.relative(facing.getCounterClockWise()).relative(facing.getOpposite());
+        BlockPos rightDiagPos = pos.relative(facing.getClockWise()).relative(facing.getOpposite());
+
+        updateDiagonalNeighbor(level, leftDiagPos, pos);
+        updateDiagonalNeighbor(level, rightDiagPos, pos);
+    }
+
+    private void updateDiagonalNeighbor(Level level, BlockPos targetPos, BlockPos sourcePos) {
+        BlockState targetState = level.getBlockState(targetPos);
+        if (targetState.getBlock() instanceof ShutterBlock) {
+            BlockState newState = targetState.updateShape(Direction.UP, level.getBlockState(sourcePos), level, targetPos, sourcePos);
+            if (newState != targetState) {
+                level.setBlock(targetPos, newState, 2 | 16);
+            }
+        }
+    }
+
     @Override
-    protected void neighborChanged(@NotNull BlockState state, Level level, @NotNull BlockPos pos, @NotNull Block neighborBlock, @NotNull BlockPos neighborPos, boolean movedByPiston) {
+    public void onPlace(BlockState state, @NotNull Level level, @NotNull BlockPos pos, BlockState oldState, boolean isMoving) {
+        if (!oldState.is(state.getBlock())) {
+            updateDiagonalNeighbors(level, pos, state);
+        }
+        super.onPlace(state, level, pos, oldState, isMoving);
+    }
+
+    @Override
+    public void onRemove(BlockState state, @NotNull Level level, @NotNull BlockPos pos, BlockState newState, boolean isMoving) {
+        if (!state.is(newState.getBlock())) {
+            updateDiagonalNeighbors(level, pos, state);
+        }
+        super.onRemove(state, level, pos, newState, isMoving);
+    }
+
+    @Override
+    public void neighborChanged(@NotNull BlockState state, Level level, @NotNull BlockPos pos, @NotNull Block neighborBlock, @NotNull BlockPos neighborPos, boolean movedByPiston) {
         if (!level.isClientSide) {
             boolean hasSignal = level.hasNeighborSignal(pos);
             if (hasSignal != state.getValue(POWERED)) {
@@ -182,7 +228,10 @@ public class ShutterBlock extends Block implements SimpleWaterloggedBlock {
                     this.playOpenCloseSound(level, pos, hasSignal);
                     level.gameEvent(null, hasSignal ? GameEvent.BLOCK_OPEN : GameEvent.BLOCK_CLOSE, pos);
                 }
-                level.setBlock(pos, state.setValue(POWERED, hasSignal).setValue(OPEN, hasSignal), 2);
+                BlockState newState = state.setValue(POWERED, hasSignal).setValue(OPEN, hasSignal);
+                newState = calculateBlockedState(newState, level, pos);
+                level.setBlock(pos, newState, 2);
+                updateDiagonalNeighbors(level, pos, newState);
             }
         }
     }

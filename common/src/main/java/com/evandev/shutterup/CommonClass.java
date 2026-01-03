@@ -30,13 +30,15 @@ public class CommonClass {
         BlockPos potentialShutterPos = clickedPos.relative(clickedFace);
         BlockState shutterState = level.getBlockState(potentialShutterPos);
 
-        if (shutterState.getBlock() instanceof ShutterBlock) {
+        if (shutterState.getBlock() instanceof ShutterBlock shutterBlock) {
             if (shutterState.getValue(ShutterBlock.OPEN)) {
                 if (shutterState.getValue(ShutterBlock.FACING) == clickedFace) {
                     if (!level.isClientSide) {
-                        level.setBlock(potentialShutterPos, shutterState.setValue(ShutterBlock.OPEN, false), 3);
-                        shutterState.getBlock().setPlacedBy(level, potentialShutterPos, shutterState, null, null);
-                        level.playSound(null, potentialShutterPos, ((ShutterBlock)shutterState.getBlock()).type.doorClose(), net.minecraft.sounds.SoundSource.BLOCKS, 1.0f, 1.0f);
+                        BlockState newState = shutterState.setValue(ShutterBlock.OPEN, false);
+                        level.setBlock(potentialShutterPos, newState, 3);
+                        shutterBlock.updateDiagonalNeighbors(level, potentialShutterPos, newState);
+                        shutterBlock.setPlacedBy(level, potentialShutterPos, shutterState, null, null);
+                        level.playSound(null, potentialShutterPos, shutterBlock.type.doorClose(), net.minecraft.sounds.SoundSource.BLOCKS, 1.0f, 1.0f);
                     }
                     return InteractionResult.SUCCESS;
                 }
