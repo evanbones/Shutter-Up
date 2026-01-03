@@ -33,9 +33,6 @@ dependencies {
 
     // EMI
     modLocalRuntime "dev.emi:emi-fabric:${emi_version}"
-
-    // Vanilla Backport
-    modLocalRuntime "maven.modrinth:vanillabackport:${vanillabackport_version}"
 }
 
 loom {

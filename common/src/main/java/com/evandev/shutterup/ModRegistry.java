@@ -1,7 +1,6 @@
 package com.evandev.shutterup;
 
 import com.evandev.shutterup.block.ShutterBlock;
-import com.evandev.shutterup.platform.Services;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
@@ -9,7 +8,6 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.properties.BlockSetType;
 
-import java.lang.reflect.Field;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.function.Supplier;
@@ -37,7 +35,7 @@ public class ModRegistry {
             @Override
             public Block get() {
                 if (instance == null) {
-                    instance = new ShutterBlock(type, BlockBehaviour.Properties.ofFullCopy(Blocks.OAK_TRAPDOOR).noOcclusion());
+                    instance = new ShutterBlock(type, BlockBehaviour.Properties.copy(Blocks.OAK_TRAPDOOR).noOcclusion());
                 }
                 return instance;
             }

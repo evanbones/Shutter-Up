@@ -20,7 +20,7 @@ If you have [Every Compat](https://www.curseforge.com/minecraft/mc-mods/every-co
 
 The mod includes shutters for the following vanilla wood types by default:
 
-* Oak 
+* Oak
 * Dark Oak
 * Spruce
 * Birch
@@ -30,6 +30,7 @@ The mod includes shutters for the following vanilla wood types by default:
 * Cherry
 * Bamboo
 * Crimson & Warped
+* Pale Oak (Requires [Vanilla Backport](https://modrinth.com/mod/vanillabackport))
 
 ## License
 

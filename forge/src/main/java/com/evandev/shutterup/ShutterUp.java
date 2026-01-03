@@ -1,33 +1,37 @@
 package com.evandev.shutterup;
 
-import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
-import net.neoforged.bus.api.IEventBus;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.Mod;
-import net.neoforged.neoforge.common.NeoForge;
-import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
-import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
-import net.neoforged.neoforge.registries.DeferredRegister;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.BuildCreativeModeTabContentsEvent;
+import net.minecraftforge.event.entity.player.PlayerInteractEvent;
+import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+import net.minecraftforge.registries.DeferredRegister;
+import net.minecraftforge.registries.ForgeRegistries;
 
 @Mod(Constants.MOD_ID)
 public class ShutterUp {
 
-    public ShutterUp(IEventBus eventBus) {
-        DeferredRegister<Block> BLOCK_REGISTER = DeferredRegister.create(BuiltInRegistries.BLOCK, Constants.MOD_ID);
-        DeferredRegister<Item> ITEM_REGISTER = DeferredRegister.create(BuiltInRegistries.ITEM, Constants.MOD_ID);
+    public ShutterUp() {
+        IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
+
+        DeferredRegister<Block> BLOCK_REGISTER = DeferredRegister.create(ForgeRegistries.BLOCKS, Constants.MOD_ID);
+        DeferredRegister<Item> ITEM_REGISTER = DeferredRegister.create(ForgeRegistries.ITEMS, Constants.MOD_ID);
 
         ModRegistry.BLOCKS.forEach(BLOCK_REGISTER::register);
         ModRegistry.ITEMS.forEach(ITEM_REGISTER::register);
 
-        BLOCK_REGISTER.register(eventBus);
-        ITEM_REGISTER.register(eventBus);
+        BLOCK_REGISTER.register(modEventBus);
+        ITEM_REGISTER.register(modEventBus);
 
-        eventBus.addListener(this::addCreative);
-        NeoForge.EVENT_BUS.register(this);
+        modEventBus.addListener(this::addCreative);
+
+        MinecraftForge.EVENT_BUS.register(this);
 
         CommonClass.init();
     }

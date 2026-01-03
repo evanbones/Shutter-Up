@@ -1,6 +1,6 @@
 plugins {
     id 'multiloader-common'
-    id 'net.neoforged.moddev'
+    id 'net.neoforged.moddev.legacyforge'
 }
 
 repositories {
@@ -13,11 +13,10 @@ repositories {
     }
 }
 
-neoForge {
-    neoFormVersion = neo_form_version
-    def at = file('src/main/resources/META-INF/accesstransformer.cfg')
-    if (at.exists()) {
-        accessTransformers.from(at.absolutePath)
+legacyForge {
+    mcpVersion = minecraft_version
+    if (file("src/main/resources/META-INF/accesstransformer.cfg").exists()) {
+        accessTransformers = ["src/main/resources/META-INF/accesstransformer.cfg"]
     }
     parchment {
         minecraftVersion = parchment_minecraft
@@ -31,15 +30,9 @@ dependencies {
     annotationProcessor group: 'io.github.llamalad7', name: 'mixinextras-common', version: '0.3.5'
 
     // Every Compat
-    compileOnly "maven.modrinth:moonlight:${moonlight_version}-neoforge"
-    compileOnly "maven.modrinth:every-compat:${every_compat_version}-neoforge"
-
-    // Vanilla Backport
-    compileOnly "maven.modrinth:vanillabackport:${vanillabackport_version}"
-    runtimeOnly "maven.modrinth:vanillabackport:${vanillabackport_version}"
+    compileOnly "maven.modrinth:moonlight:${moonlight_version}-forge"
+    compileOnly "maven.modrinth:every-compat:${every_compat_version}-forge"
 }
-
-sourceSets.main.resources.srcDir 'src/main/generated'
 
 configurations {
     commonJava {
