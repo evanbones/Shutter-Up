@@ -32,11 +32,7 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                         .define('P', plankItem)
                         .unlockedBy("has_planks", has(plankItem));
 
-                if (name.equals("pale_oak_shutter")) {
-                    builder.save(withConditions(exporter, ResourceConditions.allModsLoaded("vanillabackport")));
-                } else {
-                    builder.save(exporter);
-                }
+                builder.save(exporter);
             }
         });
     }

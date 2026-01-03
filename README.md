@@ -30,6 +30,7 @@ The mod includes shutters for the following vanilla wood types by default:
 * Cherry
 * Bamboo
 * Crimson & Warped
+* Pale Oak (Requires [Vanilla Backport](https://modrinth.com/mod/vanillabackport))
 
 ## License
 
