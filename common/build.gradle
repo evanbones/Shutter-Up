@@ -33,6 +33,10 @@ dependencies {
     // Every Compat
     compileOnly "maven.modrinth:moonlight:${moonlight_version}-neoforge"
     compileOnly "maven.modrinth:every-compat:${every_compat_version}-neoforge"
+
+    // Vanilla Backport
+    compileOnly "maven.modrinth:vanillabackport:${vanillabackport_version}"
+    runtimeOnly "maven.modrinth:vanillabackport:${vanillabackport_version}"
 }
 
 sourceSets.main.resources.srcDir 'src/main/generated'

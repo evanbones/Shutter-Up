@@ -3,6 +3,7 @@ package com.evandev.shutterup.datagen;
 import com.evandev.shutterup.ModRegistry;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
+import net.fabricmc.fabric.api.resource.conditions.v1.ResourceConditions;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.recipes.RecipeCategory;
@@ -25,12 +26,17 @@ public class ModRecipeProvider extends FabricRecipeProvider {
             Item plankItem = BuiltInRegistries.ITEM.get(ResourceLocation.withDefaultNamespace(plankName));
 
             if (plankItem != Items.AIR) {
-                ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, itemSupplier.get(), 2)
+                var builder = ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, itemSupplier.get(), 2)
                         .pattern("P P")
                         .pattern("P P")
                         .define('P', plankItem)
-                        .unlockedBy("has_planks", has(plankItem))
-                        .save(exporter);
+                        .unlockedBy("has_planks", has(plankItem));
+
+                if (name.equals("pale_oak_shutter")) {
+                    builder.save(withConditions(exporter, ResourceConditions.allModsLoaded("vanillabackport")));
+                } else {
+                    builder.save(exporter);
+                }
             }
         });
     }

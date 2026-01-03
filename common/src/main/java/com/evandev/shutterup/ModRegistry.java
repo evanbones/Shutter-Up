@@ -9,6 +9,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.properties.BlockSetType;
 
+import java.lang.reflect.Field;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.function.Supplier;
@@ -27,12 +28,24 @@ public class ModRegistry {
     public static final Supplier<Block> MANGROVE_SHUTTER = registerBlock("mangrove_shutter", BlockSetType.MANGROVE);
     public static final Supplier<Block> OAK_SHUTTER = registerBlock("oak_shutter", BlockSetType.OAK);
     public static final Supplier<Block> SPRUCE_SHUTTER = registerBlock("spruce_shutter", BlockSetType.SPRUCE);
+    public static final Supplier<Block> WARPED_SHUTTER = registerBlock("warped_shutter", BlockSetType.WARPED);
 
     public static final Supplier<Block> PALE_OAK_SHUTTER = Services.PLATFORM.isModLoaded("vanillabackport")
-            ? registerBlock("pale_oak_shutter", BlockSetType.DARK_OAK)
+            ? registerBlock("pale_oak_shutter", getPaleOakBlockSetType())
             : null;
 
-    public static final Supplier<Block> WARPED_SHUTTER = registerBlock("warped_shutter", BlockSetType.WARPED);
+    /**
+     * Tries to find BlockSetType.PALE_OAK via reflection.
+     */
+    private static BlockSetType getPaleOakBlockSetType() {
+        try {
+            Field field = BlockSetType.class.getDeclaredField("PALE_OAK");
+            field.setAccessible(true);
+            return (BlockSetType) field.get(null);
+        } catch (Exception e) {
+            return BlockSetType.OAK;
+        }
+    }
 
     private static Supplier<Block> registerBlock(String name, BlockSetType type) {
         Supplier<Block> blockSupplier = new Supplier<>() {
