@@ -3,16 +3,6 @@ plugins {
     id 'net.neoforged.moddev.legacyforge'
 }
 
-repositories {
-    maven {
-        name = "Modrinth"
-        url = "https://api.modrinth.com/maven"
-        content {
-            includeGroup "maven.modrinth"
-        }
-    }
-}
-
 legacyForge {
     mcpVersion = minecraft_version
     if (file("src/main/resources/META-INF/accesstransformer.cfg").exists()) {
@@ -26,8 +16,8 @@ legacyForge {
 
 dependencies {
     compileOnly group: 'org.spongepowered', name: 'mixin', version: '0.8.5'
-    compileOnly group: 'io.github.llamalad7', name: 'mixinextras-common', version: '0.3.5'
-    annotationProcessor group: 'io.github.llamalad7', name: 'mixinextras-common', version: '0.3.5'
+    compileOnly group: 'org.ow2.asm', name: 'asm-tree', version: '9.6'
+    implementation group: 'com.google.code.findbugs', name: 'jsr305', version: '3.0.1'
 
     // Every Compat
     compileOnly "maven.modrinth:moonlight:${moonlight_version}-forge"
@@ -47,8 +37,5 @@ configurations {
 
 artifacts {
     commonJava sourceSets.main.java.sourceDirectories.singleFile
-
-    sourceSets.main.resources.sourceDirectories.each { dir ->
-        commonResources dir
-    }
+    commonResources sourceSets.main.resources.sourceDirectories.singleFile
 }

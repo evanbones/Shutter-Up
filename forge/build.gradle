@@ -3,20 +3,6 @@ plugins {
     id 'net.neoforged.moddev.legacyforge'
 }
 
-repositories {
-    maven {
-        name = "Modrinth"
-        url = "https://api.modrinth.com/maven"
-        content {
-            includeGroup "maven.modrinth"
-        }
-    }
-    maven {
-        name = "TerraformersMC"
-        url = "https://maven.terraformersmc.com/"
-    }
-}
-
 mixin {
     add(sourceSets.main, "${mod_id}.refmap.json")
 
@@ -27,19 +13,23 @@ mixin {
 legacyForge {
     version = "${minecraft_version}-${forge_version}"
 
-    def at = project(':common').file('src/main/resources/META-INF/accesstransformer.cfg')
-    if (at.exists()) {
-        accessTransformers = ["src/main/resources/META-INF/accesstransformer.cfg"]
-    }
+    validateAccessTransformers = true
 
+    def at = file('src/main/resources/META-INF/accesstransformer.cfg')
+    if (at.exists()) {
+        accessTransformers = at
+    }
     parchment {
         minecraftVersion = parchment_minecraft
         mappingsVersion = parchment_version
     }
-
     runs {
         client {
             client()
+        }
+        data {
+            data()
+            programArguments.addAll '--mod', project.mod_id, '--all', '--output', file('src/generated/resources/').getAbsolutePath(), '--existing', file('src/main/resources/').getAbsolutePath()
         }
         server {
             server()
@@ -54,14 +44,15 @@ legacyForge {
 }
 
 dependencies {
-    compileOnly project(":common")
-
     // Every Compat
-    implementation "maven.modrinth:moonlight:${moonlight_version}-forge"
-    implementation "maven.modrinth:every-compat:${every_compat_version}-forge"
+    modImplementation "maven.modrinth:moonlight:${moonlight_version}-forge"
+    modImplementation "maven.modrinth:every-compat:${every_compat_version}-forge"
 
     // EMI
-    runtimeOnly "dev.emi:emi-neoforge:${emi_version}"
+    modImplementation "dev.emi:emi-forge:${emi_version}"
+
+    compileOnly project(":common")
+    annotationProcessor("org.spongepowered:mixin:0.8.5-SNAPSHOT:processor")
 }
 
 jar {
