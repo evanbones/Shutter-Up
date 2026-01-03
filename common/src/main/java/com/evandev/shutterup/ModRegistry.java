@@ -1,8 +1,7 @@
 package com.evandev.shutterup;
 
 import com.evandev.shutterup.block.ShutterBlock;
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
+import com.evandev.shutterup.platform.Services;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
@@ -28,11 +27,17 @@ public class ModRegistry {
     public static final Supplier<Block> MANGROVE_SHUTTER = registerBlock("mangrove_shutter", BlockSetType.MANGROVE);
     public static final Supplier<Block> OAK_SHUTTER = registerBlock("oak_shutter", BlockSetType.OAK);
     public static final Supplier<Block> SPRUCE_SHUTTER = registerBlock("spruce_shutter", BlockSetType.SPRUCE);
+
+    public static final Supplier<Block> PALE_OAK_SHUTTER = Services.PLATFORM.isModLoaded("vanillabackport")
+            ? registerBlock("pale_oak_shutter", BlockSetType.DARK_OAK)
+            : null;
+
     public static final Supplier<Block> WARPED_SHUTTER = registerBlock("warped_shutter", BlockSetType.WARPED);
 
     private static Supplier<Block> registerBlock(String name, BlockSetType type) {
         Supplier<Block> blockSupplier = new Supplier<>() {
             private Block instance;
+
             @Override
             public Block get() {
                 if (instance == null) {
@@ -44,6 +49,7 @@ public class ModRegistry {
 
         Supplier<Item> itemSupplier = new Supplier<>() {
             private Item instance;
+
             @Override
             public Item get() {
                 if (instance == null) {
