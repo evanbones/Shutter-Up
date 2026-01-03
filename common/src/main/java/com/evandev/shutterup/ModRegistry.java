@@ -30,23 +30,6 @@ public class ModRegistry {
     public static final Supplier<Block> SPRUCE_SHUTTER = registerBlock("spruce_shutter", BlockSetType.SPRUCE);
     public static final Supplier<Block> WARPED_SHUTTER = registerBlock("warped_shutter", BlockSetType.WARPED);
 
-    public static final Supplier<Block> PALE_OAK_SHUTTER = Services.PLATFORM.isModLoaded("vanillabackport")
-            ? registerBlock("pale_oak_shutter", getPaleOakBlockSetType())
-            : null;
-
-    /**
-     * Tries to find BlockSetType.PALE_OAK via reflection.
-     */
-    private static BlockSetType getPaleOakBlockSetType() {
-        try {
-            Field field = BlockSetType.class.getDeclaredField("PALE_OAK");
-            field.setAccessible(true);
-            return (BlockSetType) field.get(null);
-        } catch (Exception e) {
-            return BlockSetType.OAK;
-        }
-    }
-
     private static Supplier<Block> registerBlock(String name, BlockSetType type) {
         Supplier<Block> blockSupplier = new Supplier<>() {
             private Block instance;

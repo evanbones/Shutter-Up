@@ -28,8 +28,9 @@ public class ShutterUpEveryCompat extends SimpleModule {
                                 Utils.copyPropertySafe(w.planks).noOcclusion()
                         )
                 )
-                .addTexture(modRes("block/everycompat_shutter"))
-                .addTexture(modRes("item/everycompat_shutter"))
+                .addTextureC(modRes("block/everycompat_shutter"), "block/oak_shutter")
+                .addTextureC(modRes("item/everycompat_shutter"), "item/oak_shutter")
+
                 .setTabKey(ResourceKey.create(Registries.CREATIVE_MODE_TAB, ResourceLocation.parse("minecraft:building_blocks")))
                 .defaultRecipe()
                 .build();
