@@ -126,7 +126,9 @@ public class ShutterBlock extends Block implements SimpleWaterloggedBlock {
     @Override
     public @NotNull InteractionResult use(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos, @NotNull Player player, @NotNull InteractionHand hand, @NotNull BlockHitResult hit) {
         state = state.cycle(OPEN);
+        state = calculateBlockedState(state, level, pos);
         level.setBlock(pos, state, 10);
+        updateDiagonalNeighbors(level, pos, state);
         level.playSound(player, pos, state.getValue(OPEN) ? this.type.doorOpen() : this.type.doorClose(), SoundSource.BLOCKS, 1.0F, level.getRandom().nextFloat() * 0.1F + 0.9F);
         level.gameEvent(player, state.getValue(OPEN) ? GameEvent.BLOCK_OPEN : GameEvent.BLOCK_CLOSE, pos);
         return InteractionResult.sidedSuccess(level.isClientSide);
@@ -160,7 +162,62 @@ public class ShutterBlock extends Block implements SimpleWaterloggedBlock {
         boolean blockedLeft = !level.getBlockState(pos.relative(leftDir)).getCollisionShape(level, pos.relative(leftDir)).isEmpty();
         boolean blockedRight = !level.getBlockState(pos.relative(rightDir)).getCollisionShape(level, pos.relative(rightDir)).isEmpty();
 
+        if (!blockedLeft) {
+            BlockPos leftDiagPos = pos.relative(leftDir).relative(facing.getOpposite());
+            BlockState leftDiagState = level.getBlockState(leftDiagPos);
+            if (leftDiagState.getBlock() instanceof ShutterBlock
+                    && leftDiagState.getValue(FACING) == leftDir
+                    && leftDiagState.getValue(OPEN)) {
+                blockedLeft = true;
+            }
+        }
+
+        if (!blockedRight) {
+            BlockPos rightDiagPos = pos.relative(rightDir).relative(facing.getOpposite());
+            BlockState rightDiagState = level.getBlockState(rightDiagPos);
+            if (rightDiagState.getBlock() instanceof ShutterBlock
+                    && rightDiagState.getValue(FACING) == rightDir
+                    && rightDiagState.getValue(OPEN)) {
+                blockedRight = true;
+            }
+        }
+
         return state.setValue(BLOCKED_LEFT, blockedLeft).setValue(BLOCKED_RIGHT, blockedRight);
+    }
+
+    private void updateDiagonalNeighbors(Level level, BlockPos pos, BlockState state) {
+        Direction facing = state.getValue(FACING);
+        BlockPos leftDiagPos = pos.relative(facing.getCounterClockWise()).relative(facing.getOpposite());
+        BlockPos rightDiagPos = pos.relative(facing.getClockWise()).relative(facing.getOpposite());
+
+        updateDiagonalNeighbor(level, leftDiagPos, pos);
+        updateDiagonalNeighbor(level, rightDiagPos, pos);
+    }
+
+    private void updateDiagonalNeighbor(Level level, BlockPos targetPos, BlockPos sourcePos) {
+        BlockState targetState = level.getBlockState(targetPos);
+        if (targetState.getBlock() instanceof ShutterBlock) {
+            BlockState newState = targetState.updateShape(Direction.UP, level.getBlockState(sourcePos), level, targetPos, sourcePos);
+            if (newState != targetState) {
+                level.setBlock(targetPos, newState, 2 | 16);
+            }
+        }
+    }
+
+    @Override
+    public void onPlace(BlockState state, @NotNull Level level, @NotNull BlockPos pos, BlockState oldState, boolean isMoving) {
+        if (!oldState.is(state.getBlock())) {
+            updateDiagonalNeighbors(level, pos, state);
+        }
+        super.onPlace(state, level, pos, oldState, isMoving);
+    }
+
+    @Override
+    public void onRemove(BlockState state, @NotNull Level level, @NotNull BlockPos pos, BlockState newState, boolean isMoving) {
+        if (!state.is(newState.getBlock())) {
+            updateDiagonalNeighbors(level, pos, state);
+        }
+        super.onRemove(state, level, pos, newState, isMoving);
     }
 
     @Override
@@ -172,7 +229,10 @@ public class ShutterBlock extends Block implements SimpleWaterloggedBlock {
                     this.playOpenCloseSound(level, pos, hasSignal);
                     level.gameEvent(null, hasSignal ? GameEvent.BLOCK_OPEN : GameEvent.BLOCK_CLOSE, pos);
                 }
-                level.setBlock(pos, state.setValue(POWERED, hasSignal).setValue(OPEN, hasSignal), 2);
+                BlockState newState = state.setValue(POWERED, hasSignal).setValue(OPEN, hasSignal);
+                newState = calculateBlockedState(newState, level, pos);
+                level.setBlock(pos, newState, 2);
+                updateDiagonalNeighbors(level, pos, newState);
             }
         }
     }
