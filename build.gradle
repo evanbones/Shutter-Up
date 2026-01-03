@@ -9,4 +9,8 @@ subprojects {
             compileOnly 'org.jetbrains:annotations:24.1.0'
         }
     }
+
+    tasks.withType(Javadoc) {
+        options.addStringOption('Xdoclint:none', '-quiet')
+    }
 }
