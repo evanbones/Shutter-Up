@@ -5,7 +5,9 @@
       "conditions": {
         "items": [
           {
-            "items": "minecraft:warped_planks"
+            "items": [
+              "minecraft:dark_oak_planks"
+            ]
           }
         ]
       },
@@ -13,20 +15,21 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "shutterup:warped_shutter"
+        "recipe": "shutterup:dark_oak_shutter"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_the_recipe",
-      "has_planks"
+      "has_planks",
+      "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "shutterup:warped_shutter"
+      "shutterup:dark_oak_shutter"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

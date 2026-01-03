@@ -3,7 +3,7 @@
   "category": "misc",
   "key": {
     "P": {
-      "item": "minecraft:jungle_planks"
+      "item": "minecraft:oak_planks"
     }
   },
   "pattern": [
@@ -12,6 +12,7 @@
   ],
   "result": {
     "count": 2,
-    "id": "shutterup:jungle_shutter"
-  }
+    "item": "shutterup:oak_shutter"
+  },
+  "show_notification": true
 }

@@ -3,7 +3,7 @@
   "category": "misc",
   "key": {
     "P": {
-      "item": "minecraft:mangrove_planks"
+      "item": "minecraft:cherry_planks"
     }
   },
   "pattern": [
@@ -12,6 +12,7 @@
   ],
   "result": {
     "count": 2,
-    "id": "shutterup:mangrove_shutter"
-  }
+    "item": "shutterup:cherry_shutter"
+  },
+  "show_notification": true
 }

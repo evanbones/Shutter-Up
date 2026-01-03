@@ -3,7 +3,7 @@
   "category": "misc",
   "key": {
     "P": {
-      "item": "minecraft:spruce_planks"
+      "item": "minecraft:dark_oak_planks"
     }
   },
   "pattern": [
@@ -12,6 +12,7 @@
   ],
   "result": {
     "count": 2,
-    "id": "shutterup:spruce_shutter"
-  }
+    "item": "shutterup:dark_oak_shutter"
+  },
+  "show_notification": true
 }

@@ -5,7 +5,9 @@
       "conditions": {
         "items": [
           {
-            "items": "minecraft:bamboo_planks"
+            "items": [
+              "minecraft:warped_planks"
+            ]
           }
         ]
       },
@@ -13,20 +15,21 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "shutterup:bamboo_shutter"
+        "recipe": "shutterup:warped_shutter"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_the_recipe",
-      "has_planks"
+      "has_planks",
+      "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "shutterup:bamboo_shutter"
+      "shutterup:warped_shutter"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

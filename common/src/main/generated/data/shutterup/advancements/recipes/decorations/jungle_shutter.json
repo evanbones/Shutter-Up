@@ -5,7 +5,9 @@
       "conditions": {
         "items": [
           {
-            "items": "minecraft:mangrove_planks"
+            "items": [
+              "minecraft:jungle_planks"
+            ]
           }
         ]
       },
@@ -13,20 +15,21 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "shutterup:mangrove_shutter"
+        "recipe": "shutterup:jungle_shutter"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_the_recipe",
-      "has_planks"
+      "has_planks",
+      "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "shutterup:mangrove_shutter"
+      "shutterup:jungle_shutter"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

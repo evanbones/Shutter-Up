@@ -5,7 +5,9 @@
       "conditions": {
         "items": [
           {
-            "items": "minecraft:crimson_planks"
+            "items": [
+              "minecraft:mangrove_planks"
+            ]
           }
         ]
       },
@@ -13,20 +15,21 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "shutterup:crimson_shutter"
+        "recipe": "shutterup:mangrove_shutter"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_the_recipe",
-      "has_planks"
+      "has_planks",
+      "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "shutterup:crimson_shutter"
+      "shutterup:mangrove_shutter"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

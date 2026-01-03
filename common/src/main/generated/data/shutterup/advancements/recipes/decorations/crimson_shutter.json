@@ -5,7 +5,9 @@
       "conditions": {
         "items": [
           {
-            "items": "minecraft:oak_planks"
+            "items": [
+              "minecraft:crimson_planks"
+            ]
           }
         ]
       },
@@ -13,20 +15,21 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "shutterup:oak_shutter"
+        "recipe": "shutterup:crimson_shutter"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_the_recipe",
-      "has_planks"
+      "has_planks",
+      "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "shutterup:oak_shutter"
+      "shutterup:crimson_shutter"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

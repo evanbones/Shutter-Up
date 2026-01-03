@@ -3,7 +3,7 @@
   "category": "misc",
   "key": {
     "P": {
-      "item": "minecraft:acacia_planks"
+      "item": "minecraft:crimson_planks"
     }
   },
   "pattern": [
@@ -12,6 +12,7 @@
   ],
   "result": {
     "count": 2,
-    "id": "shutterup:acacia_shutter"
-  }
+    "item": "shutterup:crimson_shutter"
+  },
+  "show_notification": true
 }

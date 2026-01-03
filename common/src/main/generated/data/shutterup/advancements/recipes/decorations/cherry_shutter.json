@@ -5,7 +5,9 @@
       "conditions": {
         "items": [
           {
-            "items": "minecraft:dark_oak_planks"
+            "items": [
+              "minecraft:cherry_planks"
+            ]
           }
         ]
       },
@@ -13,20 +15,21 @@
     },
     "has_the_recipe": {
       "conditions": {
-        "recipe": "shutterup:dark_oak_shutter"
+        "recipe": "shutterup:cherry_shutter"
       },
       "trigger": "minecraft:recipe_unlocked"
     }
   },
   "requirements": [
     [
-      "has_the_recipe",
-      "has_planks"
+      "has_planks",
+      "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
-      "shutterup:dark_oak_shutter"
+      "shutterup:cherry_shutter"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

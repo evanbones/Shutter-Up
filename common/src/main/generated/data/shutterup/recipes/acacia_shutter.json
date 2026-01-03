@@ -3,7 +3,7 @@
   "category": "misc",
   "key": {
     "P": {
-      "item": "minecraft:warped_planks"
+      "item": "minecraft:acacia_planks"
     }
   },
   "pattern": [
@@ -12,6 +12,7 @@
   ],
   "result": {
     "count": 2,
-    "id": "shutterup:warped_shutter"
-  }
+    "item": "shutterup:acacia_shutter"
+  },
+  "show_notification": true
 }
