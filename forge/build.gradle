@@ -55,13 +55,14 @@ legacyForge {
 
 dependencies {
     compileOnly project(":common")
+    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
 
     // Every Compat
     implementation "maven.modrinth:moonlight:${moonlight_version}-forge"
     implementation "maven.modrinth:every-compat:${every_compat_version}-forge"
 
     // EMI
-    runtimeOnly "dev.emi:emi-neoforge:${emi_version}"
+    runtimeOnly "dev.emi:emi-forge:${emi_version}"
 }
 
 jar {
