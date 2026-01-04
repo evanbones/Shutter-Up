@@ -18,6 +18,10 @@ public class ShutterUp implements ModInitializer {
         // Register Items
         ModRegistry.ITEMS.forEach((name, itemSupplier) -> Registry.register(BuiltInRegistries.ITEM, ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, name), itemSupplier.get()));
 
+        // Register Sounds
+        ModSounds.SOUNDS.forEach((name, sound) -> Registry.register(BuiltInRegistries.SOUND_EVENT, ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, name), sound));
+        ModSounds.init();
+
         UseBlockCallback.EVENT.register(CommonClass::onRightClickBlock);
 
         ItemGroupEvents.modifyEntriesEvent(CreativeModeTabs.BUILDING_BLOCKS).register(content -> ModRegistry.ITEMS.forEach((name, itemSupplier) -> content.accept(itemSupplier.get())));

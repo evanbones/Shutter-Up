@@ -1,5 +1,6 @@
 package com.evandev.shutterup.block;
 
+import com.evandev.shutterup.ModSounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundSource;
@@ -132,7 +133,9 @@ public class ShutterBlock extends Block implements SimpleWaterloggedBlock {
         state = calculateBlockedState(state, level, pos);
         level.setBlock(pos, state, 10);
         updateDiagonalNeighbors(level, pos, state);
-        level.playSound(player, pos, state.getValue(OPEN) ? this.type.doorOpen() : this.type.doorClose(), SoundSource.BLOCKS, 1.0F, level.getRandom().nextFloat() * 0.1F + 0.9F);
+
+        this.playOpenCloseSound(level, pos, state.getValue(OPEN), player);
+
         level.gameEvent(player, state.getValue(OPEN) ? GameEvent.BLOCK_OPEN : GameEvent.BLOCK_CLOSE, pos);
         return InteractionResult.sidedSuccess(level.isClientSide);
     }
@@ -229,7 +232,7 @@ public class ShutterBlock extends Block implements SimpleWaterloggedBlock {
             boolean hasSignal = level.hasNeighborSignal(pos);
             if (hasSignal != state.getValue(POWERED)) {
                 if (hasSignal != state.getValue(OPEN)) {
-                    this.playOpenCloseSound(level, pos, hasSignal);
+                    this.playOpenCloseSound(level, pos, hasSignal, null);
                     level.gameEvent(null, hasSignal ? GameEvent.BLOCK_OPEN : GameEvent.BLOCK_CLOSE, pos);
                 }
                 BlockState newState = state.setValue(POWERED, hasSignal).setValue(OPEN, hasSignal);
@@ -240,8 +243,8 @@ public class ShutterBlock extends Block implements SimpleWaterloggedBlock {
         }
     }
 
-    private void playOpenCloseSound(Level level, BlockPos pos, boolean open) {
-        level.playSound(null, pos, open ? this.type.doorOpen() : this.type.doorClose(), SoundSource.BLOCKS, 1.0F, level.getRandom().nextFloat() * 0.1F + 0.9F);
+    private void playOpenCloseSound(Level level, BlockPos pos, boolean open, @Nullable Player player) {
+        level.playSound(player, pos, open ? ModSounds.SHUTTER_OPEN : ModSounds.SHUTTER_CLOSE, SoundSource.BLOCKS, 1.0F, level.getRandom().nextFloat() * 0.1F + 0.9F);
     }
 
     @Override

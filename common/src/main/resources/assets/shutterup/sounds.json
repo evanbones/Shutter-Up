@@ -1,0 +1,14 @@
+{
+  "shutter_open": {
+    "subtitle": "subtitles.block.generic.open",
+    "sounds": [
+      "shutterup:shutter_open"
+    ]
+  },
+  "shutter_close": {
+    "subtitle": "subtitles.block.generic.close",
+    "sounds": [
+      "shutterup:shutter_close"
+    ]
+  }
+}

@@ -1,6 +1,7 @@
 plugins {
     id 'multiloader-loader'
     id 'net.neoforged.moddev'
+    id "com.matthewprenger.cursegradle" version "1.4.0"
 }
 
 repositories {
@@ -59,4 +60,27 @@ dependencies {
 
     // EMI
     runtimeOnly "dev.emi:emi-neoforge:${emi_version}"
+}
+
+curseforge {
+    apiKey = System.getenv("CURSEFORGE_TOKEN") ?: "0"
+    project {
+        id = "1420451"
+        releaseType = "release"
+        changelog = file('../CHANGELOG.md')
+        changelogType = 'markdown'
+
+        addGameVersion "1.21.1"
+        addGameVersion "Java 21"
+        addGameVersion "NeoForge"
+
+        mainArtifact(jar.archiveFile) {
+            displayName = "Shutter Up NeoForge ${project.minecraft_version} - ${project.version}"
+        }
+
+        relations {
+            optionalDependency "every-compat"
+            optionalDependency "vanillabackport"
+        }
+    }
 }
