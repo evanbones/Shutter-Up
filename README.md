@@ -2,7 +2,7 @@
 
 **Shutter Up** is a lightweight mod that adds decorative shutters to the game. Designed to enhance your builds, these shutters function similarly to trapdoors but are specifically tailored for window decoration.
 
-It's a **multi-loader** mod, supporting **Fabric**, **Forge**, and **NeoForge**.
+It's a multi-loader mod, supporting Fabric (1.20.1+), Forge (1.20.1), and NeoForge (1.21.1+).
 
 ## Features
 
