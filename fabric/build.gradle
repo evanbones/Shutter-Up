@@ -79,7 +79,7 @@ curseforge {
 
         relations {
             requiredDependency "fabric-api"
-            optionalDependency "everycompat"
+            optionalDependency "every-compat"
             optionalDependency "vanillabackport"
         }
     }
