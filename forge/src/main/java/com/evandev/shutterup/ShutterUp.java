@@ -1,5 +1,6 @@
 package com.evandev.shutterup;
 
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
@@ -22,12 +23,15 @@ public class ShutterUp {
 
         DeferredRegister<Block> BLOCK_REGISTER = DeferredRegister.create(ForgeRegistries.BLOCKS, Constants.MOD_ID);
         DeferredRegister<Item> ITEM_REGISTER = DeferredRegister.create(ForgeRegistries.ITEMS, Constants.MOD_ID);
+        DeferredRegister<SoundEvent> SOUND_REGISTER = DeferredRegister.create(ForgeRegistries.SOUND_EVENTS, Constants.MOD_ID);
 
         ModRegistry.BLOCKS.forEach(BLOCK_REGISTER::register);
         ModRegistry.ITEMS.forEach(ITEM_REGISTER::register);
+        ModSounds.SOUNDS.forEach((name, sound) -> SOUND_REGISTER.register(name, () -> sound));
 
         BLOCK_REGISTER.register(modEventBus);
         ITEM_REGISTER.register(modEventBus);
+        SOUND_REGISTER.register(modEventBus);
 
         modEventBus.addListener(this::addCreative);
 

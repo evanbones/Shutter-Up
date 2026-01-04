@@ -1,6 +1,7 @@
 plugins {
     id 'multiloader-loader'
     id 'fabric-loom'
+    id "com.matthewprenger.cursegradle" version "1.4.0"
 }
 
 dependencies {
@@ -57,5 +58,32 @@ loom {
             ideConfigGenerated(true)
             runDir("build/datagen")
         }
+    }
+}
+
+curseforge {
+    apiKey = System.getenv("CURSEFORGE_TOKEN") ?: "0"
+    project {
+        id = "1420451"
+        releaseType = "release"
+        changelog = file('../CHANGELOG.md')
+        changelogType = 'markdown'
+
+        addGameVersion "1.20.1"
+        addGameVersion "Java 17"
+        addGameVersion "Fabric"
+
+        mainArtifact(remapJar) {
+            displayName = "Shutter Up Fabric ${project.minecraft_version} - ${project.version}"
+        }
+
+        relations {
+            requiredDependency "fabric-api"
+            optionalDependency "everycompat"
+            optionalDependency "vanillabackport"
+        }
+    }
+    options {
+        forgeGradleIntegration = false
     }
 }

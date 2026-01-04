@@ -1,17 +1,18 @@
 package com.evandev.shutterup;
 
+import com.evandev.shutterup.block.ShutterBlock;
 import com.evandev.shutterup.compat.ShutterUpEveryCompat;
 import com.evandev.shutterup.platform.Services;
 import net.mehvahdjukaar.every_compat.api.EveryCompatAPI;
-import net.minecraft.world.InteractionResult;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import com.evandev.shutterup.block.ShutterBlock;
+import net.minecraft.world.phys.BlockHitResult;
 
 public class CommonClass {
 
@@ -37,7 +38,12 @@ public class CommonClass {
                     BlockState newState = frontState.setValue(ShutterBlock.OPEN, false);
                     level.setBlock(frontPos, newState, 3);
                     shutterBlock.updateDiagonalNeighbors(level, frontPos, newState);
-                    level.playSound(null, frontPos, shutterBlock.type.doorClose(), net.minecraft.sounds.SoundSource.BLOCKS, 1.0f, 1.0f);
+
+                    level.playSound(null, frontPos,
+                            ModSounds.SHUTTER_CLOSE,
+                            SoundSource.BLOCKS,
+                            1.0f,
+                            level.getRandom().nextFloat() * 0.1F + 0.9F);
                 }
                 return InteractionResult.SUCCESS;
             }
@@ -50,15 +56,17 @@ public class CommonClass {
             if (behindState.getBlock() instanceof ShutterBlock shutterBlock) {
                 if (behindState.getValue(ShutterBlock.FACING) == clickedFace.getOpposite()) {
                     if (!level.isClientSide) {
-                        boolean isOpen = behindState.getValue(ShutterBlock.OPEN);
-                        BlockState newState = behindState.setValue(ShutterBlock.OPEN, !isOpen);
+                        boolean wasOpen = behindState.getValue(ShutterBlock.OPEN);
+                        BlockState newState = behindState.setValue(ShutterBlock.OPEN, !wasOpen);
 
                         level.setBlock(behindPos, newState, 3);
                         shutterBlock.updateDiagonalNeighbors(level, behindPos, newState);
 
                         level.playSound(null, behindPos,
-                                isOpen ? shutterBlock.type.doorClose() : shutterBlock.type.doorOpen(),
-                                net.minecraft.sounds.SoundSource.BLOCKS, 1.0f, 1.0f);
+                                wasOpen ? ModSounds.SHUTTER_CLOSE : ModSounds.SHUTTER_OPEN,
+                                SoundSource.BLOCKS,
+                                1.0f,
+                                level.getRandom().nextFloat() * 0.1F + 0.9F);
                     }
                     return InteractionResult.SUCCESS;
                 }
