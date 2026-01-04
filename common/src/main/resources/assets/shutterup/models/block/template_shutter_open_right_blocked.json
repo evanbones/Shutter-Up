@@ -1,5 +1,4 @@
 {
-	"format_version": "1.21.11",
 	"textures": {
 		"11": "#texture",
 		"particle": "#texture"
@@ -12,7 +11,7 @@
 				"north": {"uv": [11, 0, 13, 16], "texture": "#11"},
 				"east": {"uv": [4, 0, 12, 16], "texture": "#11"},
 				"south": {"uv": [3, 0, 5, 16], "texture": "#11"},
-				"west": {"uv": [11, 0, 4, 16], "texture": "#11"},
+				"west": {"uv": [12, 0, 4, 16], "texture": "#11"},
 				"up": {"uv": [0, 8, 2, 0], "texture": "#11"},
 				"down": {"uv": [16, 8, 14, 0], "texture": "#11"}
 			}
