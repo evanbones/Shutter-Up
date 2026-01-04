@@ -67,7 +67,7 @@ curseforge {
         }
 
         relations {
-            optionalDependency "everycompat"
+            optionalDependency "every-compat"
             optionalDependency "vanillabackport"
         }
     }
