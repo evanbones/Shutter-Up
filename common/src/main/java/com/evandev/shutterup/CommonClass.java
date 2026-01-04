@@ -26,24 +26,45 @@ public class CommonClass {
 
         BlockPos clickedPos = hitResult.getBlockPos();
         Direction clickedFace = hitResult.getDirection();
+        BlockState clickedState = level.getBlockState(clickedPos);
 
-        BlockPos potentialShutterPos = clickedPos.relative(clickedFace);
-        BlockState shutterState = level.getBlockState(potentialShutterPos);
+        BlockPos frontPos = clickedPos.relative(clickedFace);
+        BlockState frontState = level.getBlockState(frontPos);
 
-        if (shutterState.getBlock() instanceof ShutterBlock shutterBlock) {
-            if (shutterState.getValue(ShutterBlock.OPEN)) {
-                if (shutterState.getValue(ShutterBlock.FACING) == clickedFace) {
+        if (frontState.getBlock() instanceof ShutterBlock shutterBlock) {
+            if (frontState.getValue(ShutterBlock.OPEN) && frontState.getValue(ShutterBlock.FACING) == clickedFace) {
+                if (!level.isClientSide) {
+                    BlockState newState = frontState.setValue(ShutterBlock.OPEN, false);
+                    level.setBlock(frontPos, newState, 3);
+                    shutterBlock.updateDiagonalNeighbors(level, frontPos, newState);
+                    level.playSound(null, frontPos, shutterBlock.type.doorClose(), net.minecraft.sounds.SoundSource.BLOCKS, 1.0f, 1.0f);
+                }
+                return InteractionResult.SUCCESS;
+            }
+        }
+
+        if (!clickedState.isSolidRender(level, clickedPos)) {
+            BlockPos behindPos = clickedPos.relative(clickedFace.getOpposite());
+            BlockState behindState = level.getBlockState(behindPos);
+
+            if (behindState.getBlock() instanceof ShutterBlock shutterBlock) {
+                if (behindState.getValue(ShutterBlock.FACING) == clickedFace.getOpposite()) {
                     if (!level.isClientSide) {
-                        BlockState newState = shutterState.setValue(ShutterBlock.OPEN, false);
-                        level.setBlock(potentialShutterPos, newState, 3);
-                        shutterBlock.updateDiagonalNeighbors(level, potentialShutterPos, newState);
-                        shutterBlock.setPlacedBy(level, potentialShutterPos, shutterState, null, null);
-                        level.playSound(null, potentialShutterPos, shutterBlock.type.doorClose(), net.minecraft.sounds.SoundSource.BLOCKS, 1.0f, 1.0f);
+                        boolean isOpen = behindState.getValue(ShutterBlock.OPEN);
+                        BlockState newState = behindState.setValue(ShutterBlock.OPEN, !isOpen);
+
+                        level.setBlock(behindPos, newState, 3);
+                        shutterBlock.updateDiagonalNeighbors(level, behindPos, newState);
+
+                        level.playSound(null, behindPos,
+                                isOpen ? shutterBlock.type.doorClose() : shutterBlock.type.doorOpen(),
+                                net.minecraft.sounds.SoundSource.BLOCKS, 1.0f, 1.0f);
                     }
                     return InteractionResult.SUCCESS;
                 }
             }
         }
+
         return InteractionResult.PASS;
     }
 }
