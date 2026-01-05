@@ -62,7 +62,7 @@ curseforge {
         addGameVersion "Java 17"
         addGameVersion "Forge"
 
-        mainArtifact(jar) {
+        mainArtifact(file("build/libs/${project.archivesBaseName}-${project.version}.jar")) {
             displayName = "Shutter Up Forge ${project.minecraft_version} - ${project.version}"
         }
 
