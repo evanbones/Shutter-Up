@@ -1,3 +1,3 @@
-## Changelog - 1.0.1
+## Changelog - 1.0.3
 
-* Fixed Forge startup crash.
+* Fixed hard dependency on Every Compat.
