@@ -18,6 +18,12 @@ public class CommonClass {
 
     public static void init() {
         if (Services.PLATFORM.isModLoaded("everycomp")) {
+            EveryCompatRegistry.register();
+        }
+    }
+
+    private static class EveryCompatRegistry {
+        static void register() {
             EveryCompatAPI.registerModule(new ShutterUpEveryCompat());
         }
     }

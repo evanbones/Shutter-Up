@@ -1,3 +1,3 @@
-## Changelog - 1.0.1
+## Changelog - 1.0.3
 
-* Added new sounds for opening/closing shutters.
+* Fixed hard dependency on Every Compat.
