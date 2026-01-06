@@ -1,7 +1,7 @@
 plugins {
     id 'multiloader-loader'
     id 'net.neoforged.moddev.legacyforge'
-    id "com.matthewprenger.cursegradle" version "1.4.0"
+    id "me.modmuss50.mod-publish-plugin" version "1.1.0"
 }
 
 legacyForge {
@@ -50,25 +50,28 @@ jar {
     finalizedBy('reobfJar')
 }
 
-curseforge {
-    apiKey = System.getenv("CURSEFORGE_TOKEN") ?: "0"
-    project {
-        id = "1420451"
-        releaseType = "release"
-        changelog = file('../CHANGELOG.md')
-        changelogType = 'markdown'
+publishMods {
+    file = tasks.named("jar").flatMap { it.archiveFile }
+    changelog = rootProject.file("CHANGELOG.md").text
+    type = STABLE
+    displayName = "${mod_name} Forge ${minecraft_version} - ${project.version}"
+    modLoaders.add("forge")
 
-        addGameVersion "1.20.1"
-        addGameVersion "Java 17"
-        addGameVersion "Forge"
+    curseforge {
+        accessToken = providers.environmentVariable("CURSEFORGE_TOKEN")
+        projectId = "1420451"
+        minecraftVersions.add("1.20.1")
 
-        mainArtifact(file("build/libs/${project.archivesBaseName}-${project.version}.jar")) {
-            displayName = "Shutter Up Forge ${project.minecraft_version} - ${project.version}"
-        }
+        optional { slug = "every-compat" }
+        optional { slug = "vanillabackport" }
+    }
 
-        relations {
-            optionalDependency "every-compat"
-            optionalDependency "vanillabackport"
-        }
+    modrinth {
+        accessToken = providers.environmentVariable("MODRINTH_TOKEN")
+        projectId = "xaH4PQRj"
+        minecraftVersions.add("1.20.1")
+
+        optional { slug = "every-compat" }
+        optional { slug = "vanillabackport" }
     }
 }
