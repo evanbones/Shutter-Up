@@ -1,7 +1,7 @@
 plugins {
     id 'multiloader-loader'
     id 'net.neoforged.moddev'
-    id "com.matthewprenger.cursegradle" version "1.4.0"
+    id "me.modmuss50.mod-publish-plugin" version "1.1.0"
 }
 
 repositories {
@@ -62,25 +62,28 @@ dependencies {
     runtimeOnly "dev.emi:emi-neoforge:${emi_version}"
 }
 
-curseforge {
-    apiKey = System.getenv("CURSEFORGE_TOKEN") ?: "0"
-    project {
-        id = "1420451"
-        releaseType = "release"
-        changelog = file('../CHANGELOG.md')
-        changelogType = 'markdown'
+publishMods {
+    file = tasks.named("jar").flatMap { it.archiveFile }
+    changelog = rootProject.file("CHANGELOG.md").text
+    type = STABLE
+    displayName = "${mod_name} NeoForge ${minecraft_version} - ${project.version}"
+    modLoaders.add("neoforge")
 
-        addGameVersion "1.21.1"
-        addGameVersion "Java 21"
-        addGameVersion "NeoForge"
+    curseforge {
+        accessToken = providers.environmentVariable("CURSEFORGE_TOKEN")
+        projectId = "1420451"
+        minecraftVersions.add("1.21.1")
 
-        mainArtifact(jar.archiveFile) {
-            displayName = "Shutter Up NeoForge ${project.minecraft_version} - ${project.version}"
-        }
+        optional { slug = "every-compat" }
+        optional { slug = "vanillabackport" }
+    }
 
-        relations {
-            optionalDependency "every-compat"
-            optionalDependency "vanillabackport"
-        }
+    modrinth {
+        accessToken = providers.environmentVariable("MODRINTH_TOKEN")
+        projectId = "xaH4PQRj"
+        minecraftVersions.add("1.21.1")
+
+        optional { slug = "every-compat" }
+        optional { slug = "vanillabackport" }
     }
 }
