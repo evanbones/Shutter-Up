@@ -1,1 +1,1 @@
-* Updated item textures.
+* Fixed broken Forge build.

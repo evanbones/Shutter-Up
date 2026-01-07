@@ -6,17 +6,18 @@ plugins {
 
 legacyForge {
     version = "${minecraft_version}-${forge_version}"
-
     validateAccessTransformers = true
 
     def at = file('src/main/resources/META-INF/accesstransformer.cfg')
     if (at.exists()) {
         accessTransformers = at
     }
+
     parchment {
         minecraftVersion = parchment_minecraft
         mappingsVersion = parchment_version
     }
+
     runs {
         client {
             client()
@@ -29,10 +30,11 @@ legacyForge {
     mods {
         "${mod_id}" {
             sourceSet sourceSets.main
-            sourceSet project(":common").sourceSets.main
         }
     }
 }
+
+sourceSets.main.resources.srcDir 'src/generated/resources'
 
 dependencies {
     // Every Compat
@@ -43,7 +45,7 @@ dependencies {
     modImplementation "dev.emi:emi-forge:${emi_version}"
 
     compileOnly project(":common")
-    annotationProcessor("org.spongepowered:mixin:0.8.5-SNAPSHOT:processor")
+    compileOnly 'org.jetbrains:annotations:26.0.2-1'
 }
 
 jar {
@@ -51,7 +53,7 @@ jar {
 }
 
 publishMods {
-    file = tasks.named("jar").flatMap { it.archiveFile }
+    file = tasks.named("reobfJar").flatMap { it.archiveFile }
     changelog = rootProject.file("CHANGELOG.md").text
     type = STABLE
     displayName = "${mod_name} Forge ${minecraft_version} - ${project.version}"
