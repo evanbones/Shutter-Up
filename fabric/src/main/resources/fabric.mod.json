@@ -1,6 +1,6 @@
 {
     "schemaVersion": 1,
-    "id": "shutterup",
+    "id": "${mod_id}",
     "version": "${version}",
     "name": "${mod_name}",
     "description": "${description}",
@@ -12,7 +12,7 @@
         "sources": "https://github.com/evanbones/Shutter-Up"
     },
     "license": "${license}",
-    "icon": "assets/modid/${mod_id}.png",
+    "icon": "${mod_id}.png",
     "environment": "*",
     "entrypoints": {
         "main": [
@@ -30,10 +30,7 @@
         "fabricloader": ">=0.14",
         "fabric": "*",
         "minecraft": "${minecraft_version}",
-        "java": ">=17"
-    },
-    "suggests": {
-        "another-mod": "*"
+        "java": ">=${java_version}"
     }
 }
   
