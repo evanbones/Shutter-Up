@@ -1,3 +1,3 @@
-### Changed
+### Fixed
 
-- Updated mod logo (thanks, Nekomaster!)
+- Fixed missing loot tables and axe mineable tags for shutters.
