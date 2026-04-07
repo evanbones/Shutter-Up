@@ -3,9 +3,11 @@
     {
       "apply": {
         "model": "shutterup:block/cherry_shutter",
+        "x": 270,
         "y": 0
       },
       "when": {
+        "face": "floor",
         "facing": "north",
         "open": "false"
       }
@@ -13,11 +15,13 @@
     {
       "apply": {
         "model": "shutterup:block/cherry_shutter_open",
+        "x": 270,
         "y": 0
       },
       "when": {
         "blocked_left": "false",
         "blocked_right": "false",
+        "face": "floor",
         "facing": "north",
         "open": "true"
       }
@@ -25,11 +29,13 @@
     {
       "apply": {
         "model": "shutterup:block/cherry_shutter_open_left_blocked",
+        "x": 270,
         "y": 0
       },
       "when": {
         "blocked_left": "true",
         "blocked_right": "false",
+        "face": "floor",
         "facing": "north",
         "open": "true"
       }
@@ -37,11 +43,13 @@
     {
       "apply": {
         "model": "shutterup:block/cherry_shutter_open_right_blocked",
+        "x": 270,
         "y": 0
       },
       "when": {
         "blocked_left": "false",
         "blocked_right": "true",
+        "face": "floor",
         "facing": "north",
         "open": "true"
       }
@@ -49,11 +57,13 @@
     {
       "apply": {
         "model": "shutterup:block/cherry_shutter_open_both_blocked",
+        "x": 270,
         "y": 0
       },
       "when": {
         "blocked_left": "true",
         "blocked_right": "true",
+        "face": "floor",
         "facing": "north",
         "open": "true"
       }
@@ -61,9 +71,11 @@
     {
       "apply": {
         "model": "shutterup:block/cherry_shutter",
+        "x": 270,
         "y": 90
       },
       "when": {
+        "face": "floor",
         "facing": "east",
         "open": "false"
       }
@@ -71,11 +83,13 @@
     {
       "apply": {
         "model": "shutterup:block/cherry_shutter_open",
+        "x": 270,
         "y": 90
       },
       "when": {
         "blocked_left": "false",
         "blocked_right": "false",
+        "face": "floor",
         "facing": "east",
         "open": "true"
       }
@@ -83,11 +97,13 @@
     {
       "apply": {
         "model": "shutterup:block/cherry_shutter_open_left_blocked",
+        "x": 270,
         "y": 90
       },
       "when": {
         "blocked_left": "true",
         "blocked_right": "false",
+        "face": "floor",
         "facing": "east",
         "open": "true"
       }
@@ -95,11 +111,13 @@
     {
       "apply": {
         "model": "shutterup:block/cherry_shutter_open_right_blocked",
+        "x": 270,
         "y": 90
       },
       "when": {
         "blocked_left": "false",
         "blocked_right": "true",
+        "face": "floor",
         "facing": "east",
         "open": "true"
       }
@@ -107,11 +125,13 @@
     {
       "apply": {
         "model": "shutterup:block/cherry_shutter_open_both_blocked",
+        "x": 270,
         "y": 90
       },
       "when": {
         "blocked_left": "true",
         "blocked_right": "true",
+        "face": "floor",
         "facing": "east",
         "open": "true"
       }
@@ -119,9 +139,11 @@
     {
       "apply": {
         "model": "shutterup:block/cherry_shutter",
+        "x": 270,
         "y": 180
       },
       "when": {
+        "face": "floor",
         "facing": "south",
         "open": "false"
       }
@@ -129,11 +151,13 @@
     {
       "apply": {
         "model": "shutterup:block/cherry_shutter_open",
+        "x": 270,
         "y": 180
       },
       "when": {
         "blocked_left": "false",
         "blocked_right": "false",
+        "face": "floor",
         "facing": "south",
         "open": "true"
       }
@@ -141,11 +165,13 @@
     {
       "apply": {
         "model": "shutterup:block/cherry_shutter_open_left_blocked",
+        "x": 270,
         "y": 180
       },
       "when": {
         "blocked_left": "true",
         "blocked_right": "false",
+        "face": "floor",
         "facing": "south",
         "open": "true"
       }
@@ -153,11 +179,13 @@
     {
       "apply": {
         "model": "shutterup:block/cherry_shutter_open_right_blocked",
+        "x": 270,
         "y": 180
       },
       "when": {
         "blocked_left": "false",
         "blocked_right": "true",
+        "face": "floor",
         "facing": "south",
         "open": "true"
       }
@@ -165,11 +193,13 @@
     {
       "apply": {
         "model": "shutterup:block/cherry_shutter_open_both_blocked",
+        "x": 270,
         "y": 180
       },
       "when": {
         "blocked_left": "true",
         "blocked_right": "true",
+        "face": "floor",
         "facing": "south",
         "open": "true"
       }
@@ -177,9 +207,11 @@
     {
       "apply": {
         "model": "shutterup:block/cherry_shutter",
+        "x": 270,
         "y": 270
       },
       "when": {
+        "face": "floor",
         "facing": "west",
         "open": "false"
       }
@@ -187,11 +219,13 @@
     {
       "apply": {
         "model": "shutterup:block/cherry_shutter_open",
+        "x": 270,
         "y": 270
       },
       "when": {
         "blocked_left": "false",
         "blocked_right": "false",
+        "face": "floor",
         "facing": "west",
         "open": "true"
       }
@@ -199,11 +233,13 @@
     {
       "apply": {
         "model": "shutterup:block/cherry_shutter_open_left_blocked",
+        "x": 270,
         "y": 270
       },
       "when": {
         "blocked_left": "true",
         "blocked_right": "false",
+        "face": "floor",
         "facing": "west",
         "open": "true"
       }
@@ -211,11 +247,13 @@
     {
       "apply": {
         "model": "shutterup:block/cherry_shutter_open_right_blocked",
+        "x": 270,
         "y": 270
       },
       "when": {
         "blocked_left": "false",
         "blocked_right": "true",
+        "face": "floor",
         "facing": "west",
         "open": "true"
       }
@@ -223,11 +261,557 @@
     {
       "apply": {
         "model": "shutterup:block/cherry_shutter_open_both_blocked",
+        "x": 270,
         "y": 270
       },
       "when": {
         "blocked_left": "true",
         "blocked_right": "true",
+        "face": "floor",
+        "facing": "west",
+        "open": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "shutterup:block/cherry_shutter",
+        "x": 0,
+        "y": 0
+      },
+      "when": {
+        "face": "wall",
+        "facing": "north",
+        "open": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "shutterup:block/cherry_shutter_open",
+        "x": 0,
+        "y": 0
+      },
+      "when": {
+        "blocked_left": "false",
+        "blocked_right": "false",
+        "face": "wall",
+        "facing": "north",
+        "open": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "shutterup:block/cherry_shutter_open_left_blocked",
+        "x": 0,
+        "y": 0
+      },
+      "when": {
+        "blocked_left": "true",
+        "blocked_right": "false",
+        "face": "wall",
+        "facing": "north",
+        "open": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "shutterup:block/cherry_shutter_open_right_blocked",
+        "x": 0,
+        "y": 0
+      },
+      "when": {
+        "blocked_left": "false",
+        "blocked_right": "true",
+        "face": "wall",
+        "facing": "north",
+        "open": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "shutterup:block/cherry_shutter_open_both_blocked",
+        "x": 0,
+        "y": 0
+      },
+      "when": {
+        "blocked_left": "true",
+        "blocked_right": "true",
+        "face": "wall",
+        "facing": "north",
+        "open": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "shutterup:block/cherry_shutter",
+        "x": 0,
+        "y": 90
+      },
+      "when": {
+        "face": "wall",
+        "facing": "east",
+        "open": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "shutterup:block/cherry_shutter_open",
+        "x": 0,
+        "y": 90
+      },
+      "when": {
+        "blocked_left": "false",
+        "blocked_right": "false",
+        "face": "wall",
+        "facing": "east",
+        "open": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "shutterup:block/cherry_shutter_open_left_blocked",
+        "x": 0,
+        "y": 90
+      },
+      "when": {
+        "blocked_left": "true",
+        "blocked_right": "false",
+        "face": "wall",
+        "facing": "east",
+        "open": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "shutterup:block/cherry_shutter_open_right_blocked",
+        "x": 0,
+        "y": 90
+      },
+      "when": {
+        "blocked_left": "false",
+        "blocked_right": "true",
+        "face": "wall",
+        "facing": "east",
+        "open": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "shutterup:block/cherry_shutter_open_both_blocked",
+        "x": 0,
+        "y": 90
+      },
+      "when": {
+        "blocked_left": "true",
+        "blocked_right": "true",
+        "face": "wall",
+        "facing": "east",
+        "open": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "shutterup:block/cherry_shutter",
+        "x": 0,
+        "y": 180
+      },
+      "when": {
+        "face": "wall",
+        "facing": "south",
+        "open": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "shutterup:block/cherry_shutter_open",
+        "x": 0,
+        "y": 180
+      },
+      "when": {
+        "blocked_left": "false",
+        "blocked_right": "false",
+        "face": "wall",
+        "facing": "south",
+        "open": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "shutterup:block/cherry_shutter_open_left_blocked",
+        "x": 0,
+        "y": 180
+      },
+      "when": {
+        "blocked_left": "true",
+        "blocked_right": "false",
+        "face": "wall",
+        "facing": "south",
+        "open": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "shutterup:block/cherry_shutter_open_right_blocked",
+        "x": 0,
+        "y": 180
+      },
+      "when": {
+        "blocked_left": "false",
+        "blocked_right": "true",
+        "face": "wall",
+        "facing": "south",
+        "open": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "shutterup:block/cherry_shutter_open_both_blocked",
+        "x": 0,
+        "y": 180
+      },
+      "when": {
+        "blocked_left": "true",
+        "blocked_right": "true",
+        "face": "wall",
+        "facing": "south",
+        "open": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "shutterup:block/cherry_shutter",
+        "x": 0,
+        "y": 270
+      },
+      "when": {
+        "face": "wall",
+        "facing": "west",
+        "open": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "shutterup:block/cherry_shutter_open",
+        "x": 0,
+        "y": 270
+      },
+      "when": {
+        "blocked_left": "false",
+        "blocked_right": "false",
+        "face": "wall",
+        "facing": "west",
+        "open": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "shutterup:block/cherry_shutter_open_left_blocked",
+        "x": 0,
+        "y": 270
+      },
+      "when": {
+        "blocked_left": "true",
+        "blocked_right": "false",
+        "face": "wall",
+        "facing": "west",
+        "open": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "shutterup:block/cherry_shutter_open_right_blocked",
+        "x": 0,
+        "y": 270
+      },
+      "when": {
+        "blocked_left": "false",
+        "blocked_right": "true",
+        "face": "wall",
+        "facing": "west",
+        "open": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "shutterup:block/cherry_shutter_open_both_blocked",
+        "x": 0,
+        "y": 270
+      },
+      "when": {
+        "blocked_left": "true",
+        "blocked_right": "true",
+        "face": "wall",
+        "facing": "west",
+        "open": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "shutterup:block/cherry_shutter",
+        "x": 90,
+        "y": 0
+      },
+      "when": {
+        "face": "ceiling",
+        "facing": "north",
+        "open": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "shutterup:block/cherry_shutter_open",
+        "x": 90,
+        "y": 0
+      },
+      "when": {
+        "blocked_left": "false",
+        "blocked_right": "false",
+        "face": "ceiling",
+        "facing": "north",
+        "open": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "shutterup:block/cherry_shutter_open_left_blocked",
+        "x": 90,
+        "y": 0
+      },
+      "when": {
+        "blocked_left": "true",
+        "blocked_right": "false",
+        "face": "ceiling",
+        "facing": "north",
+        "open": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "shutterup:block/cherry_shutter_open_right_blocked",
+        "x": 90,
+        "y": 0
+      },
+      "when": {
+        "blocked_left": "false",
+        "blocked_right": "true",
+        "face": "ceiling",
+        "facing": "north",
+        "open": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "shutterup:block/cherry_shutter_open_both_blocked",
+        "x": 90,
+        "y": 0
+      },
+      "when": {
+        "blocked_left": "true",
+        "blocked_right": "true",
+        "face": "ceiling",
+        "facing": "north",
+        "open": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "shutterup:block/cherry_shutter",
+        "x": 90,
+        "y": 90
+      },
+      "when": {
+        "face": "ceiling",
+        "facing": "east",
+        "open": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "shutterup:block/cherry_shutter_open",
+        "x": 90,
+        "y": 90
+      },
+      "when": {
+        "blocked_left": "false",
+        "blocked_right": "false",
+        "face": "ceiling",
+        "facing": "east",
+        "open": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "shutterup:block/cherry_shutter_open_left_blocked",
+        "x": 90,
+        "y": 90
+      },
+      "when": {
+        "blocked_left": "true",
+        "blocked_right": "false",
+        "face": "ceiling",
+        "facing": "east",
+        "open": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "shutterup:block/cherry_shutter_open_right_blocked",
+        "x": 90,
+        "y": 90
+      },
+      "when": {
+        "blocked_left": "false",
+        "blocked_right": "true",
+        "face": "ceiling",
+        "facing": "east",
+        "open": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "shutterup:block/cherry_shutter_open_both_blocked",
+        "x": 90,
+        "y": 90
+      },
+      "when": {
+        "blocked_left": "true",
+        "blocked_right": "true",
+        "face": "ceiling",
+        "facing": "east",
+        "open": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "shutterup:block/cherry_shutter",
+        "x": 90,
+        "y": 180
+      },
+      "when": {
+        "face": "ceiling",
+        "facing": "south",
+        "open": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "shutterup:block/cherry_shutter_open",
+        "x": 90,
+        "y": 180
+      },
+      "when": {
+        "blocked_left": "false",
+        "blocked_right": "false",
+        "face": "ceiling",
+        "facing": "south",
+        "open": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "shutterup:block/cherry_shutter_open_left_blocked",
+        "x": 90,
+        "y": 180
+      },
+      "when": {
+        "blocked_left": "true",
+        "blocked_right": "false",
+        "face": "ceiling",
+        "facing": "south",
+        "open": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "shutterup:block/cherry_shutter_open_right_blocked",
+        "x": 90,
+        "y": 180
+      },
+      "when": {
+        "blocked_left": "false",
+        "blocked_right": "true",
+        "face": "ceiling",
+        "facing": "south",
+        "open": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "shutterup:block/cherry_shutter_open_both_blocked",
+        "x": 90,
+        "y": 180
+      },
+      "when": {
+        "blocked_left": "true",
+        "blocked_right": "true",
+        "face": "ceiling",
+        "facing": "south",
+        "open": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "shutterup:block/cherry_shutter",
+        "x": 90,
+        "y": 270
+      },
+      "when": {
+        "face": "ceiling",
+        "facing": "west",
+        "open": "false"
+      }
+    },
+    {
+      "apply": {
+        "model": "shutterup:block/cherry_shutter_open",
+        "x": 90,
+        "y": 270
+      },
+      "when": {
+        "blocked_left": "false",
+        "blocked_right": "false",
+        "face": "ceiling",
+        "facing": "west",
+        "open": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "shutterup:block/cherry_shutter_open_left_blocked",
+        "x": 90,
+        "y": 270
+      },
+      "when": {
+        "blocked_left": "true",
+        "blocked_right": "false",
+        "face": "ceiling",
+        "facing": "west",
+        "open": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "shutterup:block/cherry_shutter_open_right_blocked",
+        "x": 90,
+        "y": 270
+      },
+      "when": {
+        "blocked_left": "false",
+        "blocked_right": "true",
+        "face": "ceiling",
+        "facing": "west",
+        "open": "true"
+      }
+    },
+    {
+      "apply": {
+        "model": "shutterup:block/cherry_shutter_open_both_blocked",
+        "x": 90,
+        "y": 270
+      },
+      "when": {
+        "blocked_left": "true",
+        "blocked_right": "true",
+        "face": "ceiling",
         "facing": "west",
         "open": "true"
       }

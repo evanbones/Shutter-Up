@@ -1,3 +1,7 @@
-### Fixed
+### Added
 
-- Fixed missing loot tables and axe mineable tags for shutters.
+- Added Iron Shutters.
+
+### Changed
+
+- Shutters can now be placed sideways.
