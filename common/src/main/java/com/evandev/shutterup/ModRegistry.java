@@ -27,6 +27,7 @@ public class ModRegistry {
     public static final Supplier<Block> OAK_SHUTTER = registerBlock("oak_shutter", BlockSetType.OAK);
     public static final Supplier<Block> SPRUCE_SHUTTER = registerBlock("spruce_shutter", BlockSetType.SPRUCE);
     public static final Supplier<Block> WARPED_SHUTTER = registerBlock("warped_shutter", BlockSetType.WARPED);
+    public static final Supplier<Block> IRON_SHUTTER = registerBlock("iron_shutter", BlockSetType.IRON);
 
     private static Supplier<Block> registerBlock(String name, BlockSetType type) {
         Supplier<Block> blockSupplier = new Supplier<>() {

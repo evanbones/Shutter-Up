@@ -5,11 +5,14 @@
   "block.shutterup.cherry_shutter": "Cherry Shutter",
   "block.shutterup.crimson_shutter": "Crimson Shutter",
   "block.shutterup.dark_oak_shutter": "Dark Oak Shutter",
+  "block.shutterup.iron_shutter": "Iron Shutter",
   "block.shutterup.jungle_shutter": "Jungle Shutter",
   "block.shutterup.mangrove_shutter": "Mangrove Shutter",
   "block.shutterup.oak_shutter": "Oak Shutter",
   "block.shutterup.spruce_shutter": "Spruce Shutter",
   "block.shutterup.warped_shutter": "Warped Shutter",
   "block_type.shutterup.shutter": "%s Shutter",
-  "itemGroup.shutterup": "Shutter Up"
+  "itemGroup.shutterup": "Shutter Up",
+  "subtitles.block.generic.close": "Shutter closes",
+  "subtitles.block.generic.open": "Shutter opens"
 }

@@ -16,10 +16,15 @@ public class ModBlockTagProvider extends FabricTagProvider.BlockTagProvider {
 
     @Override
     protected void addTags(HolderLookup.Provider wrapperLookup) {
-        FabricTagBuilder builder = getOrCreateTagBuilder(BlockTags.MINEABLE_WITH_AXE);
+        FabricTagBuilder axeBuilder = getOrCreateTagBuilder(BlockTags.MINEABLE_WITH_AXE);
+        FabricTagBuilder pickaxeBuilder = getOrCreateTagBuilder(BlockTags.MINEABLE_WITH_PICKAXE);
 
-        ModRegistry.BLOCKS.values().forEach(blockSupplier -> {
-            builder.add(blockSupplier.get());
+        ModRegistry.BLOCKS.forEach((name, blockSupplier) -> {
+            if (name.equals("iron_shutter")) {
+                pickaxeBuilder.add(blockSupplier.get());
+            } else {
+                axeBuilder.add(blockSupplier.get());
+            }
         });
     }
 }

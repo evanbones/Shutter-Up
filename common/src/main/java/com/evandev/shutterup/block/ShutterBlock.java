@@ -4,7 +4,6 @@ import com.evandev.shutterup.ModSounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundSource;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -15,10 +14,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.SimpleWaterloggedBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.state.properties.BlockSetType;
-import net.minecraft.world.level.block.state.properties.BlockStateProperties;
-import net.minecraft.world.level.block.state.properties.BooleanProperty;
-import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.minecraft.world.level.block.state.properties.*;
 import net.minecraft.world.level.gameevent.GameEvent;
 import net.minecraft.world.level.material.FluidState;
 import net.minecraft.world.level.material.Fluids;
@@ -31,6 +27,7 @@ import org.jetbrains.annotations.Nullable;
 
 public class ShutterBlock extends Block implements SimpleWaterloggedBlock {
     public static final EnumProperty<Direction> FACING = BlockStateProperties.HORIZONTAL_FACING;
+    public static final EnumProperty<AttachFace> FACE = BlockStateProperties.ATTACH_FACE;
     public static final BooleanProperty OPEN = BlockStateProperties.OPEN;
     public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
     public static final BooleanProperty WATERLOGGED = BlockStateProperties.WATERLOGGED;
@@ -43,6 +40,9 @@ public class ShutterBlock extends Block implements SimpleWaterloggedBlock {
     protected static final VoxelShape EAST_SHAPE = Block.box(0.0D, 0.0D, 0.0D, 2.0D, 16.0D, 16.0D);
     protected static final VoxelShape WEST_SHAPE = Block.box(14.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D);
 
+    protected static final VoxelShape FLOOR_SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 2.0D, 16.0D);
+    protected static final VoxelShape CEILING_SHAPE = Block.box(0.0D, 14.0D, 0.0D, 16.0D, 16.0D, 16.0D);
+
     protected static final VoxelShape NORTH_OPEN_SHAPE = Shapes.or(Block.box(-6.0D, 0.0D, 14.0D, 2.0D, 16.0D, 16.0D), Block.box(14.0D, 0.0D, 14.0D, 22.0D, 16.0D, 16.0D));
     protected static final VoxelShape SOUTH_OPEN_SHAPE = Shapes.or(Block.box(-6.0D, 0.0D, 0.0D, 2.0D, 16.0D, 2.0D), Block.box(14.0D, 0.0D, 0.0D, 22.0D, 16.0D, 2.0D));
     protected static final VoxelShape EAST_OPEN_SHAPE = Shapes.or(Block.box(0.0D, 0.0D, -6.0D, 2.0D, 16.0D, 2.0D), Block.box(0.0D, 0.0D, 14.0D, 2.0D, 16.0D, 22.0D));
@@ -51,18 +51,32 @@ public class ShutterBlock extends Block implements SimpleWaterloggedBlock {
     protected static final VoxelShape NORTH_OPEN_LEFT_BLOCKED_SHAPE = Shapes.or(Block.box(0.0D, 0.0D, 8.0D, 2.0D, 16.0D, 16.0D), Block.box(14.0D, 0.0D, 14.0D, 22.0D, 16.0D, 16.0D));
     protected static final VoxelShape NORTH_OPEN_RIGHT_BLOCKED_SHAPE = Shapes.or(Block.box(-6.0D, 0.0D, 14.0D, 2.0D, 16.0D, 16.0D), Block.box(14.0D, 0.0D, 8.0D, 16.0D, 16.0D, 16.0D));
     protected static final VoxelShape NORTH_OPEN_BOTH_BLOCKED_SHAPE = Shapes.or(Block.box(0.0D, 0.0D, 8.0D, 2.0D, 16.0D, 16.0D), Block.box(14.0D, 0.0D, 8.0D, 16.0D, 16.0D, 16.0D));
-
     protected static final VoxelShape SOUTH_OPEN_LEFT_BLOCKED_SHAPE = Shapes.or(Block.box(14.0D, 0.0D, 0.0D, 16.0D, 16.0D, 8.0D), Block.box(-6.0D, 0.0D, 0.0D, 2.0D, 16.0D, 2.0D));
     protected static final VoxelShape SOUTH_OPEN_RIGHT_BLOCKED_SHAPE = Shapes.or(Block.box(14.0D, 0.0D, 0.0D, 22.0D, 16.0D, 2.0D), Block.box(0.0D, 0.0D, 0.0D, 2.0D, 16.0D, 8.0D));
     protected static final VoxelShape SOUTH_OPEN_BOTH_BLOCKED_SHAPE = Shapes.or(Block.box(14.0D, 0.0D, 0.0D, 16.0D, 16.0D, 8.0D), Block.box(0.0D, 0.0D, 0.0D, 2.0D, 16.0D, 8.0D));
-
     protected static final VoxelShape EAST_OPEN_LEFT_BLOCKED_SHAPE = Shapes.or(Block.box(0.0D, 0.0D, 0.0D, 8.0D, 16.0D, 2.0D), Block.box(0.0D, 0.0D, 14.0D, 2.0D, 16.0D, 22.0D));
     protected static final VoxelShape EAST_OPEN_RIGHT_BLOCKED_SHAPE = Shapes.or(Block.box(0.0D, 0.0D, -6.0D, 2.0D, 16.0D, 2.0D), Block.box(0.0D, 0.0D, 14.0D, 8.0D, 16.0D, 16.0D));
     protected static final VoxelShape EAST_OPEN_BOTH_BLOCKED_SHAPE = Shapes.or(Block.box(0.0D, 0.0D, 0.0D, 8.0D, 16.0D, 2.0D), Block.box(0.0D, 0.0D, 14.0D, 8.0D, 16.0D, 16.0D));
-
     protected static final VoxelShape WEST_OPEN_LEFT_BLOCKED_SHAPE = Shapes.or(Block.box(8.0D, 0.0D, 14.0D, 16.0D, 16.0D, 16.0D), Block.box(14.0D, 0.0D, -6.0D, 16.0D, 16.0D, 2.0D));
     protected static final VoxelShape WEST_OPEN_RIGHT_BLOCKED_SHAPE = Shapes.or(Block.box(14.0D, 0.0D, 14.0D, 16.0D, 16.0D, 22.0D), Block.box(8.0D, 0.0D, 0.0D, 16.0D, 16.0D, 2.0D));
     protected static final VoxelShape WEST_OPEN_BOTH_BLOCKED_SHAPE = Shapes.or(Block.box(8.0D, 0.0D, 14.0D, 16.0D, 16.0D, 16.0D), Block.box(8.0D, 0.0D, 0.0D, 16.0D, 16.0D, 2.0D));
+
+    protected static final VoxelShape FLOOR_Z_OPEN_SHAPE = Shapes.or(Block.box(-6.0D, 0.0D, 0.0D, 2.0D, 2.0D, 16.0D), Block.box(14.0D, 0.0D, 0.0D, 22.0D, 2.0D, 16.0D));
+    protected static final VoxelShape FLOOR_Z_OPEN_NEG_BLOCKED = Shapes.or(Block.box(0.0D, 0.0D, 0.0D, 8.0D, 2.0D, 16.0D), Block.box(14.0D, 0.0D, 0.0D, 22.0D, 2.0D, 16.0D));
+    protected static final VoxelShape FLOOR_Z_OPEN_POS_BLOCKED = Shapes.or(Block.box(-6.0D, 0.0D, 0.0D, 2.0D, 2.0D, 16.0D), Block.box(8.0D, 0.0D, 0.0D, 16.0D, 2.0D, 16.0D));
+    protected static final VoxelShape FLOOR_Z_OPEN_BOTH_BLOCKED = Shapes.or(Block.box(0.0D, 0.0D, 0.0D, 8.0D, 2.0D, 16.0D), Block.box(8.0D, 0.0D, 0.0D, 16.0D, 2.0D, 16.0D));
+    protected static final VoxelShape FLOOR_X_OPEN_SHAPE = Shapes.or(Block.box(0.0D, 0.0D, -6.0D, 16.0D, 2.0D, 2.0D), Block.box(0.0D, 0.0D, 14.0D, 16.0D, 2.0D, 22.0D));
+    protected static final VoxelShape FLOOR_X_OPEN_NEG_BLOCKED = Shapes.or(Block.box(0.0D, 0.0D, 0.0D, 16.0D, 2.0D, 8.0D), Block.box(0.0D, 0.0D, 14.0D, 16.0D, 2.0D, 22.0D));
+    protected static final VoxelShape FLOOR_X_OPEN_POS_BLOCKED = Shapes.or(Block.box(0.0D, 0.0D, -6.0D, 16.0D, 2.0D, 2.0D), Block.box(0.0D, 0.0D, 8.0D, 16.0D, 2.0D, 16.0D));
+    protected static final VoxelShape FLOOR_X_OPEN_BOTH_BLOCKED = Shapes.or(Block.box(0.0D, 0.0D, 0.0D, 16.0D, 2.0D, 8.0D), Block.box(0.0D, 0.0D, 8.0D, 16.0D, 2.0D, 16.0D));
+    protected static final VoxelShape CEILING_Z_OPEN_SHAPE = Shapes.or(Block.box(-6.0D, 14.0D, 0.0D, 2.0D, 16.0D, 16.0D), Block.box(14.0D, 14.0D, 0.0D, 22.0D, 16.0D, 16.0D));
+    protected static final VoxelShape CEILING_Z_OPEN_NEG_BLOCKED = Shapes.or(Block.box(0.0D, 14.0D, 0.0D, 8.0D, 16.0D, 16.0D), Block.box(14.0D, 14.0D, 0.0D, 22.0D, 16.0D, 16.0D));
+    protected static final VoxelShape CEILING_Z_OPEN_POS_BLOCKED = Shapes.or(Block.box(-6.0D, 14.0D, 0.0D, 2.0D, 16.0D, 16.0D), Block.box(8.0D, 14.0D, 0.0D, 16.0D, 16.0D, 16.0D));
+    protected static final VoxelShape CEILING_Z_OPEN_BOTH_BLOCKED = Shapes.or(Block.box(0.0D, 14.0D, 0.0D, 8.0D, 16.0D, 16.0D), Block.box(8.0D, 14.0D, 0.0D, 16.0D, 16.0D, 16.0D));
+    protected static final VoxelShape CEILING_X_OPEN_SHAPE = Shapes.or(Block.box(0.0D, 14.0D, -6.0D, 16.0D, 16.0D, 2.0D), Block.box(0.0D, 14.0D, 14.0D, 16.0D, 16.0D, 22.0D));
+    protected static final VoxelShape CEILING_X_OPEN_NEG_BLOCKED = Shapes.or(Block.box(0.0D, 14.0D, 0.0D, 16.0D, 16.0D, 8.0D), Block.box(0.0D, 14.0D, 14.0D, 16.0D, 16.0D, 22.0D));
+    protected static final VoxelShape CEILING_X_OPEN_POS_BLOCKED = Shapes.or(Block.box(0.0D, 14.0D, -6.0D, 16.0D, 16.0D, 2.0D), Block.box(0.0D, 14.0D, 8.0D, 16.0D, 16.0D, 16.0D));
+    protected static final VoxelShape CEILING_X_OPEN_BOTH_BLOCKED = Shapes.or(Block.box(0.0D, 14.0D, 0.0D, 16.0D, 16.0D, 8.0D), Block.box(0.0D, 14.0D, 8.0D, 16.0D, 16.0D, 16.0D));
 
     public final BlockSetType type;
 
@@ -71,6 +85,7 @@ public class ShutterBlock extends Block implements SimpleWaterloggedBlock {
         this.type = type;
         this.registerDefaultState(this.stateDefinition.any()
                 .setValue(FACING, Direction.NORTH)
+                .setValue(FACE, AttachFace.WALL)
                 .setValue(OPEN, false)
                 .setValue(POWERED, false)
                 .setValue(WATERLOGGED, false)
@@ -80,11 +95,40 @@ public class ShutterBlock extends Block implements SimpleWaterloggedBlock {
 
     @Override
     public @NotNull VoxelShape getShape(BlockState state, @NotNull BlockGetter level, @NotNull BlockPos pos, @NotNull CollisionContext context) {
-        if (state.getValue(OPEN)) {
-            Direction facing = state.getValue(FACING);
-            boolean left = state.getValue(BLOCKED_LEFT);
-            boolean right = state.getValue(BLOCKED_RIGHT);
+        AttachFace face = state.getValue(FACE);
+        Direction facing = state.getValue(FACING);
+        boolean open = state.getValue(OPEN);
+        boolean left = state.getValue(BLOCKED_LEFT);
+        boolean right = state.getValue(BLOCKED_RIGHT);
 
+        if (face == AttachFace.FLOOR || face == AttachFace.CEILING) {
+            if (open) {
+                boolean isZAxis = facing.getAxis() == Direction.Axis.Z;
+                boolean isCeiling = face == AttachFace.CEILING;
+
+                if (left && right) {
+                    return isCeiling ? (isZAxis ? CEILING_Z_OPEN_BOTH_BLOCKED : CEILING_X_OPEN_BOTH_BLOCKED)
+                            : (isZAxis ? FLOOR_Z_OPEN_BOTH_BLOCKED : FLOOR_X_OPEN_BOTH_BLOCKED);
+                }
+
+                boolean blockNeg = (facing == Direction.NORTH && left) || (facing == Direction.SOUTH && right) || (facing == Direction.EAST && left) || (facing == Direction.WEST && right);
+                boolean blockPos = (facing == Direction.NORTH && right) || (facing == Direction.SOUTH && left) || (facing == Direction.EAST && right) || (facing == Direction.WEST && left);
+
+                if (blockNeg) {
+                    return isCeiling ? (isZAxis ? CEILING_Z_OPEN_NEG_BLOCKED : CEILING_X_OPEN_NEG_BLOCKED)
+                            : (isZAxis ? FLOOR_Z_OPEN_NEG_BLOCKED : FLOOR_X_OPEN_NEG_BLOCKED);
+                } else if (blockPos) {
+                    return isCeiling ? (isZAxis ? CEILING_Z_OPEN_POS_BLOCKED : CEILING_X_OPEN_POS_BLOCKED)
+                            : (isZAxis ? FLOOR_Z_OPEN_POS_BLOCKED : FLOOR_X_OPEN_POS_BLOCKED);
+                }
+
+                return isCeiling ? (isZAxis ? CEILING_Z_OPEN_SHAPE : CEILING_X_OPEN_SHAPE)
+                        : (isZAxis ? FLOOR_Z_OPEN_SHAPE : FLOOR_X_OPEN_SHAPE);
+            }
+            return face == AttachFace.FLOOR ? FLOOR_SHAPE : CEILING_SHAPE;
+        }
+
+        if (open) {
             if (left && right) {
                 return switch (facing) {
                     case SOUTH -> SOUTH_OPEN_BOTH_BLOCKED_SHAPE;
@@ -107,7 +151,6 @@ public class ShutterBlock extends Block implements SimpleWaterloggedBlock {
                     default -> NORTH_OPEN_RIGHT_BLOCKED_SHAPE;
                 };
             }
-
             return switch (facing) {
                 case SOUTH -> SOUTH_OPEN_SHAPE;
                 case EAST -> EAST_OPEN_SHAPE;
@@ -116,7 +159,7 @@ public class ShutterBlock extends Block implements SimpleWaterloggedBlock {
             };
         }
 
-        return switch (state.getValue(FACING)) {
+        return switch (facing) {
             case SOUTH -> SOUTH_SHAPE;
             case EAST -> EAST_SHAPE;
             case WEST -> WEST_SHAPE;
@@ -125,28 +168,56 @@ public class ShutterBlock extends Block implements SimpleWaterloggedBlock {
     }
 
     @Override
-    public @NotNull InteractionResult use(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos, @NotNull Player player, @NotNull InteractionHand hand, @NotNull BlockHitResult hit) {
+    protected @NotNull InteractionResult useWithoutItem(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos, @NotNull Player player, @NotNull BlockHitResult hit) {
+        if (!this.type.canOpenByHand()) {
+            return InteractionResult.PASS;
+        }
         return toggleShutter(state, level, pos, player);
     }
 
-    public InteractionResult toggleShutter(BlockState state, Level level, BlockPos pos, Player player) {
-        state = state.cycle(OPEN);
-        state = calculateBlockedState(state, level, pos);
-        level.setBlock(pos, state, 10);
-        updateDiagonalNeighbors(level, pos, state);
-
-        this.playOpenCloseSound(level, pos, state.getValue(OPEN), player);
-
-        level.gameEvent(player, state.getValue(OPEN) ? GameEvent.BLOCK_OPEN : GameEvent.BLOCK_CLOSE, pos);
+    public InteractionResult toggleShutter(BlockState state, Level level, BlockPos pos, @Nullable Player player) {
+        boolean willOpen = !state.getValue(OPEN);
+        toggleWithConnected(state, level, pos, willOpen, player);
         return InteractionResult.sidedSuccess(level.isClientSide);
+    }
+
+    public void toggleWithConnected(BlockState state, Level level, BlockPos pos, boolean open, @Nullable Player player) {
+        BlockState newState = calculateBlockedState(state.setValue(OPEN, open), level, pos);
+        level.setBlock(pos, newState, 10);
+        updateDiagonalNeighbors(level, pos, newState);
+        this.playOpenCloseSound(level, pos, open, player);
+        level.gameEvent(player, open ? GameEvent.BLOCK_OPEN : GameEvent.BLOCK_CLOSE, pos);
+
+        Direction.Axis propagationAxis = state.getValue(FACE) == AttachFace.WALL ? Direction.Axis.Y : state.getValue(FACING).getClockWise().getAxis();
+
+        for (Direction dir : Direction.values()) {
+            if (dir.getAxis() == propagationAxis) {
+                BlockPos current = pos.relative(dir);
+                while (level.getBlockState(current).getBlock() instanceof ShutterBlock
+                        && level.getBlockState(current).getValue(FACING) == state.getValue(FACING)
+                        && level.getBlockState(current).getValue(FACE) == state.getValue(FACE)
+                        && level.getBlockState(current).getValue(OPEN) != open) {
+
+                    BlockState nextState = level.getBlockState(current);
+                    nextState = calculateBlockedState(nextState.setValue(OPEN, open), level, current);
+                    level.setBlock(current, nextState, 10);
+                    updateDiagonalNeighbors(level, current, nextState);
+                    current = current.relative(dir);
+                }
+            }
+        }
     }
 
     @Nullable
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
         FluidState fluidState = context.getLevel().getFluidState(context.getClickedPos());
+        Direction clickedFace = context.getClickedFace();
+        AttachFace face = clickedFace == Direction.UP ? AttachFace.FLOOR : (clickedFace == Direction.DOWN ? AttachFace.CEILING : AttachFace.WALL);
+
         BlockState state = this.defaultBlockState()
                 .setValue(FACING, context.getHorizontalDirection().getOpposite())
+                .setValue(FACE, face)
                 .setValue(WATERLOGGED, fluidState.getType() == Fluids.WATER)
                 .setValue(POWERED, context.getLevel().hasNeighborSignal(context.getClickedPos()));
 
@@ -233,13 +304,10 @@ public class ShutterBlock extends Block implements SimpleWaterloggedBlock {
             boolean hasSignal = level.hasNeighborSignal(pos);
             if (hasSignal != state.getValue(POWERED)) {
                 if (hasSignal != state.getValue(OPEN)) {
-                    this.playOpenCloseSound(level, pos, hasSignal, null);
-                    level.gameEvent(null, hasSignal ? GameEvent.BLOCK_OPEN : GameEvent.BLOCK_CLOSE, pos);
+                    toggleWithConnected(state, level, pos, hasSignal, null);
+                } else {
+                    level.setBlock(pos, state.setValue(POWERED, hasSignal), 2);
                 }
-                BlockState newState = state.setValue(POWERED, hasSignal).setValue(OPEN, hasSignal);
-                newState = calculateBlockedState(newState, level, pos);
-                level.setBlock(pos, newState, 2);
-                updateDiagonalNeighbors(level, pos, newState);
             }
         }
     }
@@ -250,7 +318,7 @@ public class ShutterBlock extends Block implements SimpleWaterloggedBlock {
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(FACING, OPEN, POWERED, WATERLOGGED, BLOCKED_LEFT, BLOCKED_RIGHT);
+        builder.add(FACING, FACE, OPEN, POWERED, WATERLOGGED, BLOCKED_LEFT, BLOCKED_RIGHT);
     }
 
     @Override
