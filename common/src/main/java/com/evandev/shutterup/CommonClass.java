@@ -35,7 +35,7 @@ public class CommonClass {
             if (!shutterBlock.type.canOpenByHand()) return InteractionResult.PASS;
             if (frontState.getValue(ShutterBlock.OPEN) && frontState.getValue(ShutterBlock.FACING) == clickedFace) {
                 if (!level.isClientSide) {
-                    shutterBlock.toggleWithConnected(frontState, level, frontPos, false, player);
+                    shutterBlock.toggleWithConnected(frontState, level, frontPos, false, player, !player.isShiftKeyDown());
                 }
                 return InteractionResult.SUCCESS;
             }
@@ -50,7 +50,7 @@ public class CommonClass {
                 if (behindState.getValue(ShutterBlock.FACING) == clickedFace.getOpposite()) {
                     if (!level.isClientSide) {
                         boolean wasOpen = behindState.getValue(ShutterBlock.OPEN);
-                        shutterBlock.toggleWithConnected(behindState, level, behindPos, !wasOpen, player);
+                        shutterBlock.toggleWithConnected(behindState, level, behindPos, !wasOpen, player, !player.isShiftKeyDown());
                     }
                     return InteractionResult.SUCCESS;
                 }

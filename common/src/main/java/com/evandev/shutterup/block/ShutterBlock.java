@@ -175,31 +175,35 @@ public class ShutterBlock extends Block implements SimpleWaterloggedBlock {
         if (!this.type.canOpenByHand()) {
             return InteractionResult.PASS;
         }
-        return toggleShutter(state, level, pos, player);
+        return toggleShutter(state, level, pos, player, !player.isShiftKeyDown());
     }
 
-    public InteractionResult toggleShutter(BlockState state, Level level, BlockPos pos, @Nullable Player player) {
+    public InteractionResult toggleShutter(BlockState state, Level level, BlockPos pos, @Nullable Player player, boolean propagate) {
         boolean willOpen = !state.getValue(OPEN);
-        toggleWithConnected(state, level, pos, willOpen, player);
+        toggleWithConnected(state, level, pos, willOpen, player, propagate);
         return InteractionResult.sidedSuccess(level.isClientSide);
     }
 
-    public void toggleWithConnected(BlockState state, Level level, BlockPos pos, boolean open, @Nullable Player player) {
+    public void toggleWithConnected(BlockState state, Level level, BlockPos pos, boolean open, @Nullable Player player, boolean propagate) {
         BlockState newState = calculateBlockedState(state.setValue(OPEN, open), level, pos);
         level.setBlock(pos, newState, 10);
         updateDiagonalNeighbors(level, pos, newState);
         this.playOpenCloseSound(level, pos, open, player);
         level.gameEvent(player, open ? GameEvent.BLOCK_OPEN : GameEvent.BLOCK_CLOSE, pos);
 
+        if (!propagate) return;
+
         Direction.Axis propagationAxis = state.getValue(FACE) == AttachFace.WALL ? Direction.Axis.Y : state.getValue(FACING).getClockWise().getAxis();
+        boolean canOpenByHand = this.type.canOpenByHand();
 
         for (Direction dir : Direction.values()) {
             if (dir.getAxis() == propagationAxis) {
                 BlockPos current = pos.relative(dir);
-                while (level.getBlockState(current).getBlock() instanceof ShutterBlock
+                while (level.getBlockState(current).getBlock() instanceof ShutterBlock neighborShutter
                         && level.getBlockState(current).getValue(FACING) == state.getValue(FACING)
                         && level.getBlockState(current).getValue(FACE) == state.getValue(FACE)
-                        && level.getBlockState(current).getValue(OPEN) != open) {
+                        && level.getBlockState(current).getValue(OPEN) != open
+                        && neighborShutter.type.canOpenByHand() == canOpenByHand) {
 
                     BlockState nextState = level.getBlockState(current);
                     nextState = calculateBlockedState(nextState.setValue(OPEN, open), level, current);
@@ -307,7 +311,7 @@ public class ShutterBlock extends Block implements SimpleWaterloggedBlock {
             boolean hasSignal = level.hasNeighborSignal(pos);
             if (hasSignal != state.getValue(POWERED)) {
                 if (hasSignal != state.getValue(OPEN)) {
-                    toggleWithConnected(state, level, pos, hasSignal, null);
+                    toggleWithConnected(state, level, pos, hasSignal, null, true);
                 } else {
                     level.setBlock(pos, state.setValue(POWERED, hasSignal), 2);
                 }
