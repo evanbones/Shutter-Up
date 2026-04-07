@@ -62,21 +62,24 @@ public class ShutterBlock extends Block implements SimpleWaterloggedBlock {
     protected static final VoxelShape WEST_OPEN_BOTH_BLOCKED_SHAPE = Shapes.or(Block.box(8.0D, 0.0D, 14.0D, 16.0D, 16.0D, 16.0D), Block.box(8.0D, 0.0D, 0.0D, 16.0D, 16.0D, 2.0D));
 
     protected static final VoxelShape FLOOR_Z_OPEN_SHAPE = Shapes.or(Block.box(-6.0D, 0.0D, 0.0D, 2.0D, 2.0D, 16.0D), Block.box(14.0D, 0.0D, 0.0D, 22.0D, 2.0D, 16.0D));
-    protected static final VoxelShape FLOOR_Z_OPEN_NEG_BLOCKED = Shapes.or(Block.box(0.0D, 0.0D, 0.0D, 8.0D, 2.0D, 16.0D), Block.box(14.0D, 0.0D, 0.0D, 22.0D, 2.0D, 16.0D));
-    protected static final VoxelShape FLOOR_Z_OPEN_POS_BLOCKED = Shapes.or(Block.box(-6.0D, 0.0D, 0.0D, 2.0D, 2.0D, 16.0D), Block.box(8.0D, 0.0D, 0.0D, 16.0D, 2.0D, 16.0D));
-    protected static final VoxelShape FLOOR_Z_OPEN_BOTH_BLOCKED = Shapes.or(Block.box(0.0D, 0.0D, 0.0D, 8.0D, 2.0D, 16.0D), Block.box(8.0D, 0.0D, 0.0D, 16.0D, 2.0D, 16.0D));
+    protected static final VoxelShape FLOOR_Z_OPEN_NEG_BLOCKED = Shapes.or(Block.box(0.0D, 0.0D, 0.0D, 2.0D, 8.0D, 16.0D), Block.box(14.0D, 0.0D, 0.0D, 22.0D, 2.0D, 16.0D));
+    protected static final VoxelShape FLOOR_Z_OPEN_POS_BLOCKED = Shapes.or(Block.box(-6.0D, 0.0D, 0.0D, 2.0D, 2.0D, 16.0D), Block.box(14.0D, 0.0D, 0.0D, 16.0D, 8.0D, 16.0D));
+    protected static final VoxelShape FLOOR_Z_OPEN_BOTH_BLOCKED = Shapes.or(Block.box(0.0D, 0.0D, 0.0D, 2.0D, 8.0D, 16.0D), Block.box(14.0D, 0.0D, 0.0D, 16.0D, 8.0D, 16.0D));
+
     protected static final VoxelShape FLOOR_X_OPEN_SHAPE = Shapes.or(Block.box(0.0D, 0.0D, -6.0D, 16.0D, 2.0D, 2.0D), Block.box(0.0D, 0.0D, 14.0D, 16.0D, 2.0D, 22.0D));
-    protected static final VoxelShape FLOOR_X_OPEN_NEG_BLOCKED = Shapes.or(Block.box(0.0D, 0.0D, 0.0D, 16.0D, 2.0D, 8.0D), Block.box(0.0D, 0.0D, 14.0D, 16.0D, 2.0D, 22.0D));
-    protected static final VoxelShape FLOOR_X_OPEN_POS_BLOCKED = Shapes.or(Block.box(0.0D, 0.0D, -6.0D, 16.0D, 2.0D, 2.0D), Block.box(0.0D, 0.0D, 8.0D, 16.0D, 2.0D, 16.0D));
-    protected static final VoxelShape FLOOR_X_OPEN_BOTH_BLOCKED = Shapes.or(Block.box(0.0D, 0.0D, 0.0D, 16.0D, 2.0D, 8.0D), Block.box(0.0D, 0.0D, 8.0D, 16.0D, 2.0D, 16.0D));
+    protected static final VoxelShape FLOOR_X_OPEN_NEG_BLOCKED = Shapes.or(Block.box(0.0D, 0.0D, 0.0D, 16.0D, 8.0D, 2.0D), Block.box(0.0D, 0.0D, 14.0D, 16.0D, 2.0D, 22.0D));
+    protected static final VoxelShape FLOOR_X_OPEN_POS_BLOCKED = Shapes.or(Block.box(0.0D, 0.0D, -6.0D, 16.0D, 2.0D, 2.0D), Block.box(0.0D, 0.0D, 14.0D, 16.0D, 8.0D, 16.0D));
+    protected static final VoxelShape FLOOR_X_OPEN_BOTH_BLOCKED = Shapes.or(Block.box(0.0D, 0.0D, 0.0D, 16.0D, 8.0D, 2.0D), Block.box(0.0D, 0.0D, 14.0D, 16.0D, 8.0D, 16.0D));
+
     protected static final VoxelShape CEILING_Z_OPEN_SHAPE = Shapes.or(Block.box(-6.0D, 14.0D, 0.0D, 2.0D, 16.0D, 16.0D), Block.box(14.0D, 14.0D, 0.0D, 22.0D, 16.0D, 16.0D));
-    protected static final VoxelShape CEILING_Z_OPEN_NEG_BLOCKED = Shapes.or(Block.box(0.0D, 14.0D, 0.0D, 8.0D, 16.0D, 16.0D), Block.box(14.0D, 14.0D, 0.0D, 22.0D, 16.0D, 16.0D));
-    protected static final VoxelShape CEILING_Z_OPEN_POS_BLOCKED = Shapes.or(Block.box(-6.0D, 14.0D, 0.0D, 2.0D, 16.0D, 16.0D), Block.box(8.0D, 14.0D, 0.0D, 16.0D, 16.0D, 16.0D));
-    protected static final VoxelShape CEILING_Z_OPEN_BOTH_BLOCKED = Shapes.or(Block.box(0.0D, 14.0D, 0.0D, 8.0D, 16.0D, 16.0D), Block.box(8.0D, 14.0D, 0.0D, 16.0D, 16.0D, 16.0D));
+    protected static final VoxelShape CEILING_Z_OPEN_NEG_BLOCKED = Shapes.or(Block.box(0.0D, 8.0D, 0.0D, 2.0D, 16.0D, 16.0D), Block.box(14.0D, 14.0D, 0.0D, 22.0D, 16.0D, 16.0D));
+    protected static final VoxelShape CEILING_Z_OPEN_POS_BLOCKED = Shapes.or(Block.box(-6.0D, 14.0D, 0.0D, 2.0D, 16.0D, 16.0D), Block.box(14.0D, 8.0D, 0.0D, 16.0D, 16.0D, 16.0D));
+    protected static final VoxelShape CEILING_Z_OPEN_BOTH_BLOCKED = Shapes.or(Block.box(0.0D, 8.0D, 0.0D, 2.0D, 16.0D, 16.0D), Block.box(14.0D, 8.0D, 0.0D, 16.0D, 16.0D, 16.0D));
+
     protected static final VoxelShape CEILING_X_OPEN_SHAPE = Shapes.or(Block.box(0.0D, 14.0D, -6.0D, 16.0D, 16.0D, 2.0D), Block.box(0.0D, 14.0D, 14.0D, 16.0D, 16.0D, 22.0D));
-    protected static final VoxelShape CEILING_X_OPEN_NEG_BLOCKED = Shapes.or(Block.box(0.0D, 14.0D, 0.0D, 16.0D, 16.0D, 8.0D), Block.box(0.0D, 14.0D, 14.0D, 16.0D, 16.0D, 22.0D));
-    protected static final VoxelShape CEILING_X_OPEN_POS_BLOCKED = Shapes.or(Block.box(0.0D, 14.0D, -6.0D, 16.0D, 16.0D, 2.0D), Block.box(0.0D, 14.0D, 8.0D, 16.0D, 16.0D, 16.0D));
-    protected static final VoxelShape CEILING_X_OPEN_BOTH_BLOCKED = Shapes.or(Block.box(0.0D, 14.0D, 0.0D, 16.0D, 16.0D, 8.0D), Block.box(0.0D, 14.0D, 8.0D, 16.0D, 16.0D, 16.0D));
+    protected static final VoxelShape CEILING_X_OPEN_NEG_BLOCKED = Shapes.or(Block.box(0.0D, 8.0D, 0.0D, 16.0D, 16.0D, 2.0D), Block.box(0.0D, 14.0D, 14.0D, 16.0D, 16.0D, 22.0D));
+    protected static final VoxelShape CEILING_X_OPEN_POS_BLOCKED = Shapes.or(Block.box(0.0D, 14.0D, -6.0D, 16.0D, 16.0D, 2.0D), Block.box(0.0D, 8.0D, 14.0D, 16.0D, 16.0D, 16.0D));
+    protected static final VoxelShape CEILING_X_OPEN_BOTH_BLOCKED = Shapes.or(Block.box(0.0D, 8.0D, 0.0D, 16.0D, 16.0D, 2.0D), Block.box(0.0D, 8.0D, 14.0D, 16.0D, 16.0D, 16.0D));
 
     public final BlockSetType type;
 
