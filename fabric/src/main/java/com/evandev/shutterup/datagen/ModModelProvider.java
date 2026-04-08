@@ -59,13 +59,15 @@ public class ModModelProvider extends FabricModelProvider {
         ModRegistry.BLOCKS.forEach((name, blockSupplier) -> {
             Block block = blockSupplier.get();
             if (block instanceof ShutterBlock) {
-                generateShutter(generator, block, TEMPLATE_CLOSED, TEMPLATE_OPEN, TEMPLATE_OPEN_LEFT_BLOCKED, TEMPLATE_OPEN_RIGHT_BLOCKED, TEMPLATE_OPEN_BOTH_BLOCKED);
+                generateShutter(generator, block, name, TEMPLATE_CLOSED, TEMPLATE_OPEN, TEMPLATE_OPEN_LEFT_BLOCKED, TEMPLATE_OPEN_RIGHT_BLOCKED, TEMPLATE_OPEN_BOTH_BLOCKED);
             }
         });
     }
 
-    private void generateShutter(BlockModelGenerators generator, Block block, ModelTemplate closedTemplate, ModelTemplate openTemplate, ModelTemplate leftBlockedTemplate, ModelTemplate rightBlockedTemplate, ModelTemplate bothBlockedTemplate) {
-        TextureMapping textureMapping = TextureMapping.defaultTexture(block);
+    private void generateShutter(BlockModelGenerators generator, Block block, String name, ModelTemplate closedTemplate, ModelTemplate openTemplate, ModelTemplate leftBlockedTemplate, ModelTemplate rightBlockedTemplate, ModelTemplate bothBlockedTemplate) {
+        String textureName = name.replace("waxed_", "");
+        ResourceLocation textureLoc = ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "block/" + textureName);
+        TextureMapping textureMapping = new TextureMapping().put(TextureSlot.TEXTURE, textureLoc);
 
         ResourceLocation closedModel = closedTemplate.create(block, textureMapping, generator.modelOutput);
         ResourceLocation openModel = openTemplate.createWithSuffix(block, "_open", textureMapping, generator.modelOutput);
@@ -161,7 +163,8 @@ public class ModModelProvider extends FabricModelProvider {
     @Override
     public void generateItemModels(ItemModelGenerators generator) {
         ModRegistry.ITEMS.forEach((name, itemSupplier) -> {
-            ResourceLocation itemTexture = ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "item/" + name);
+            String textureName = name.replace("waxed_", "");
+            ResourceLocation itemTexture = ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "item/" + textureName);
 
             ResourceLocation parent = ResourceLocation.parse("item/generated");
 

@@ -1,0 +1,13 @@
+{
+  "values": {
+    "shutterup:copper_shutter": {
+      "oxidized": "shutterup:exposed_copper_shutter"
+    },
+    "shutterup:exposed_copper_shutter": {
+      "oxidized": "shutterup:weathered_copper_shutter"
+    },
+    "shutterup:weathered_copper_shutter": {
+      "oxidized": "shutterup:oxidized_copper_shutter"
+    }
+  }
+}

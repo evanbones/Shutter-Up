@@ -1,10 +1,12 @@
 package com.evandev.shutterup;
 
 import com.evandev.shutterup.block.ShutterBlock;
+import com.evandev.shutterup.block.WeatheringShutterBlock;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.WeatheringCopper;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.properties.BlockSetType;
 
@@ -27,7 +29,50 @@ public class ModRegistry {
     public static final Supplier<Block> OAK_SHUTTER = registerBlock("oak_shutter", BlockSetType.OAK);
     public static final Supplier<Block> SPRUCE_SHUTTER = registerBlock("spruce_shutter", BlockSetType.SPRUCE);
     public static final Supplier<Block> WARPED_SHUTTER = registerBlock("warped_shutter", BlockSetType.WARPED);
+
     public static final Supplier<Block> IRON_SHUTTER = registerBlock("iron_shutter", BlockSetType.IRON);
+
+    public static final Supplier<Block> COPPER_SHUTTER = registerCopperBlock("copper_shutter", WeatheringCopper.WeatherState.UNAFFECTED, false);
+    public static final Supplier<Block> EXPOSED_COPPER_SHUTTER = registerCopperBlock("exposed_copper_shutter", WeatheringCopper.WeatherState.EXPOSED, false);
+    public static final Supplier<Block> WEATHERED_COPPER_SHUTTER = registerCopperBlock("weathered_copper_shutter", WeatheringCopper.WeatherState.WEATHERED, false);
+    public static final Supplier<Block> OXIDIZED_COPPER_SHUTTER = registerCopperBlock("oxidized_copper_shutter", WeatheringCopper.WeatherState.OXIDIZED, false);
+
+    public static final Supplier<Block> WAXED_COPPER_SHUTTER = registerCopperBlock("waxed_copper_shutter", WeatheringCopper.WeatherState.UNAFFECTED, true);
+    public static final Supplier<Block> WAXED_EXPOSED_COPPER_SHUTTER = registerCopperBlock("waxed_exposed_copper_shutter", WeatheringCopper.WeatherState.EXPOSED, true);
+    public static final Supplier<Block> WAXED_WEATHERED_COPPER_SHUTTER = registerCopperBlock("waxed_weathered_copper_shutter", WeatheringCopper.WeatherState.WEATHERED, true);
+    public static final Supplier<Block> WAXED_OXIDIZED_COPPER_SHUTTER = registerCopperBlock("waxed_oxidized_copper_shutter", WeatheringCopper.WeatherState.OXIDIZED, true);
+
+    private static Supplier<Block> registerCopperBlock(String name, WeatheringCopper.WeatherState state, boolean waxed) {
+        Supplier<Block> blockSupplier = new Supplier<>() {
+            private Block instance;
+
+            @Override
+            public Block get() {
+                if (instance == null) {
+                    BlockBehaviour.Properties props = BlockBehaviour.Properties.ofFullCopy(Blocks.COPPER_BLOCK).noOcclusion();
+                    instance = waxed ? new ShutterBlock(BlockSetType.COPPER, props) : new WeatheringShutterBlock(state, BlockSetType.COPPER, props);
+                }
+                return instance;
+            }
+        };
+
+        Supplier<Item> itemSupplier = new Supplier<>() {
+            private Item instance;
+
+            @Override
+            public Item get() {
+                if (instance == null) {
+                    instance = new BlockItem(blockSupplier.get(), new Item.Properties());
+                }
+                return instance;
+            }
+        };
+
+        BLOCKS.put(name, blockSupplier);
+        ITEMS.put(name, itemSupplier);
+
+        return blockSupplier;
+    }
 
     private static Supplier<Block> registerBlock(String name, BlockSetType type) {
         Supplier<Block> blockSupplier = new Supplier<>() {

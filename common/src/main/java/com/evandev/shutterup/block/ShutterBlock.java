@@ -3,6 +3,7 @@ package com.evandev.shutterup.block;
 import com.evandev.shutterup.ModSounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
@@ -320,7 +321,13 @@ public class ShutterBlock extends Block implements SimpleWaterloggedBlock {
     }
 
     private void playOpenCloseSound(Level level, BlockPos pos, boolean open, @Nullable Player player) {
-        level.playSound(player, pos, open ? ModSounds.SHUTTER_OPEN : ModSounds.SHUTTER_CLOSE, SoundSource.BLOCKS, 1.0F, level.getRandom().nextFloat() * 0.1F + 0.9F);
+        SoundEvent sound;
+        if (this.type == BlockSetType.IRON || this.type == BlockSetType.COPPER) {
+            sound = open ? ModSounds.METAL_SHUTTER_OPEN : ModSounds.METAL_SHUTTER_CLOSE;
+        } else {
+            sound = open ? ModSounds.SHUTTER_OPEN : ModSounds.SHUTTER_CLOSE;
+        }
+        level.playSound(player, pos, sound, SoundSource.BLOCKS, 1.0F, level.getRandom().nextFloat() * 0.1F + 0.9F);
     }
 
     @Override

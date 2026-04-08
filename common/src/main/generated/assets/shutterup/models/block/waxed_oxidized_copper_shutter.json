@@ -1,0 +1,6 @@
+{
+  "parent": "shutterup:block/template_shutter_closed",
+  "textures": {
+    "texture": "shutterup:block/oxidized_copper_shutter"
+  }
+}
