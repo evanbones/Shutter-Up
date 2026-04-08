@@ -32,8 +32,7 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                         .unlockedBy("has_honeycomb", has(Items.HONEYCOMB))
                         .save(exporter);
             } else if (name.equals("iron_shutter")) {
-                ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, itemSupplier.get(), 4)
-                        .pattern("P P")
+                ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, itemSupplier.get(), 2)
                         .pattern("P P")
                         .define('P', Items.IRON_INGOT)
                         .unlockedBy("has_iron_ingot", has(Items.IRON_INGOT))
@@ -42,7 +41,6 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                 Item ingot = Items.COPPER_INGOT;
 
                 ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, itemSupplier.get(), 2)
-                        .pattern("P P")
                         .pattern("P P")
                         .define('P', ingot)
                         .unlockedBy("has_copper_ingot", has(ingot))
