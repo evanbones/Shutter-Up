@@ -10,5 +10,17 @@
     "sounds": [
       "shutterup:shutter_close"
     ]
+  },
+  "metal_shutter_open": {
+    "subtitle": "subtitles.block.generic.open",
+    "sounds": [
+      "shutterup:metal_shutter_open"
+    ]
+  },
+  "metal_shutter_close": {
+    "subtitle": "subtitles.block.generic.close",
+    "sounds": [
+      "shutterup:metal_shutter_close"
+    ]
   }
 }

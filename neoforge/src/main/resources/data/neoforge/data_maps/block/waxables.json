@@ -1,0 +1,16 @@
+{
+  "values": {
+    "shutterup:copper_shutter": {
+      "waxed": "shutterup:waxed_copper_shutter"
+    },
+    "shutterup:exposed_copper_shutter": {
+      "waxed": "shutterup:waxed_exposed_copper_shutter"
+    },
+    "shutterup:weathered_copper_shutter": {
+      "waxed": "shutterup:waxed_weathered_copper_shutter"
+    },
+    "shutterup:oxidized_copper_shutter": {
+      "waxed": "shutterup:waxed_oxidized_copper_shutter"
+    }
+  }
+}
