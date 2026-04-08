@@ -311,10 +311,11 @@ public class ShutterBlock extends Block implements SimpleWaterloggedBlock {
         if (!level.isClientSide) {
             boolean hasSignal = level.hasNeighborSignal(pos);
             if (hasSignal != state.getValue(POWERED)) {
+                BlockState poweredState = state.setValue(POWERED, hasSignal);
                 if (hasSignal != state.getValue(OPEN)) {
-                    toggleWithConnected(state, level, pos, hasSignal, null, true);
+                    toggleWithConnected(poweredState, level, pos, hasSignal, null, true);
                 } else {
-                    level.setBlock(pos, state.setValue(POWERED, hasSignal), 2);
+                    level.setBlock(pos, poweredState, 2);
                 }
             }
         }
