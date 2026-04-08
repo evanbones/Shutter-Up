@@ -12,6 +12,7 @@
   ],
   "result": {
     "count": 4,
-    "id": "shutterup:birch_shutter"
-  }
+    "item": "shutterup:birch_shutter"
+  },
+  "show_notification": true
 }

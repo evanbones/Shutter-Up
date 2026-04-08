@@ -30,28 +30,28 @@ public class ModModelProvider extends FabricModelProvider {
     @Override
     public void generateBlockStateModels(BlockModelGenerators generator) {
         ModelTemplate TEMPLATE_CLOSED = new ModelTemplate(
-                Optional.of(ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "block/template_shutter_closed")),
+                Optional.of(new ResourceLocation(Constants.MOD_ID, "block/template_shutter_closed")),
                 Optional.empty(),
                 TextureSlot.TEXTURE
         );
         ModelTemplate TEMPLATE_OPEN = new ModelTemplate(
-                Optional.of(ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "block/template_shutter_open")),
+                Optional.of(new ResourceLocation(Constants.MOD_ID, "block/template_shutter_open")),
                 Optional.empty(),
                 TextureSlot.TEXTURE
         );
         ModelTemplate TEMPLATE_OPEN_LEFT_BLOCKED = new ModelTemplate(
-                Optional.of(ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "block/template_shutter_open_left_blocked")),
+                Optional.of(new ResourceLocation(Constants.MOD_ID, "block/template_shutter_open_left_blocked")),
                 Optional.empty(),
                 TextureSlot.TEXTURE
         );
         ModelTemplate TEMPLATE_OPEN_RIGHT_BLOCKED = new ModelTemplate(
-                Optional.of(ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "block/template_shutter_open_right_blocked")),
+                Optional.of(new ResourceLocation(Constants.MOD_ID, "block/template_shutter_open_right_blocked")),
                 Optional.empty(),
                 TextureSlot.TEXTURE
         );
 
         ModelTemplate TEMPLATE_OPEN_BOTH_BLOCKED = new ModelTemplate(
-                Optional.of(ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "block/template_shutter_open_both_blocked")),
+                Optional.of(new ResourceLocation(Constants.MOD_ID, "block/template_shutter_open_both_blocked")),
                 Optional.empty(),
                 TextureSlot.TEXTURE
         );
@@ -66,7 +66,7 @@ public class ModModelProvider extends FabricModelProvider {
 
     private void generateShutter(BlockModelGenerators generator, Block block, String name, ModelTemplate closedTemplate, ModelTemplate openTemplate, ModelTemplate leftBlockedTemplate, ModelTemplate rightBlockedTemplate, ModelTemplate bothBlockedTemplate) {
         String textureName = name.replace("waxed_", "");
-        ResourceLocation textureLoc = ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "block/" + textureName);
+        ResourceLocation textureLoc = new ResourceLocation(Constants.MOD_ID, "block/" + textureName);
         TextureMapping textureMapping = new TextureMapping().put(TextureSlot.TEXTURE, textureLoc);
 
         ResourceLocation closedModel = closedTemplate.create(block, textureMapping, generator.modelOutput);
@@ -164,9 +164,9 @@ public class ModModelProvider extends FabricModelProvider {
     public void generateItemModels(ItemModelGenerators generator) {
         ModRegistry.ITEMS.forEach((name, itemSupplier) -> {
             String textureName = name.replace("waxed_", "");
-            ResourceLocation itemTexture = ResourceLocation.fromNamespaceAndPath(Constants.MOD_ID, "item/" + textureName);
+            ResourceLocation itemTexture = new ResourceLocation(Constants.MOD_ID, "item/" + textureName);
 
-            ResourceLocation parent = ResourceLocation.parse("item/generated");
+            ResourceLocation parent = new ResourceLocation("item/generated");
 
             new ModelTemplate(Optional.of(parent), Optional.empty(), TextureSlot.LAYER0)
                     .create(ModelLocationUtils.getModelLocation(itemSupplier.get()), TextureMapping.layer0(itemTexture), generator.output);

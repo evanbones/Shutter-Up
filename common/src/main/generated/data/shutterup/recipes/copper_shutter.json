@@ -12,6 +12,7 @@
   ],
   "result": {
     "count": 2,
-    "id": "shutterup:copper_shutter"
-  }
+    "item": "shutterup:copper_shutter"
+  },
+  "show_notification": true
 }

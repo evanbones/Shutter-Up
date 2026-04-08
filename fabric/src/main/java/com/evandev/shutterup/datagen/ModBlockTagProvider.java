@@ -20,16 +20,12 @@ public class ModBlockTagProvider extends FabricTagProvider.BlockTagProvider {
         FabricTagBuilder pickaxeBuilder = getOrCreateTagBuilder(BlockTags.MINEABLE_WITH_PICKAXE);
 
         FabricTagBuilder needsStoneToolBuilder = getOrCreateTagBuilder(BlockTags.NEEDS_STONE_TOOL);
-        FabricTagBuilder incorrectGoldBuilder = getOrCreateTagBuilder(BlockTags.INCORRECT_FOR_GOLD_TOOL);
-        FabricTagBuilder incorrectWoodenBuilder = getOrCreateTagBuilder(BlockTags.INCORRECT_FOR_WOODEN_TOOL);
 
         ModRegistry.BLOCKS.forEach((name, blockSupplier) -> {
             if (name.contains("iron") || name.contains("copper")) {
                 pickaxeBuilder.add(blockSupplier.get());
 
                 needsStoneToolBuilder.add(blockSupplier.get());
-                incorrectGoldBuilder.add(blockSupplier.get());
-                incorrectWoodenBuilder.add(blockSupplier.get());
             } else {
                 axeBuilder.add(blockSupplier.get());
             }

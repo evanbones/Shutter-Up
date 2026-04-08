@@ -12,6 +12,7 @@
   ],
   "result": {
     "count": 4,
-    "id": "shutterup:bamboo_shutter"
-  }
+    "item": "shutterup:bamboo_shutter"
+  },
+  "show_notification": true
 }

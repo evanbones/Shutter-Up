@@ -12,6 +12,7 @@
   ],
   "result": {
     "count": 4,
-    "id": "shutterup:jungle_shutter"
-  }
+    "item": "shutterup:jungle_shutter"
+  },
+  "show_notification": true
 }

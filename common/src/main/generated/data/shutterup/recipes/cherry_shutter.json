@@ -12,6 +12,7 @@
   ],
   "result": {
     "count": 4,
-    "id": "shutterup:cherry_shutter"
-  }
+    "item": "shutterup:cherry_shutter"
+  },
+  "show_notification": true
 }

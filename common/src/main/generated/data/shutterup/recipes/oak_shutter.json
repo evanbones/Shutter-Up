@@ -12,6 +12,7 @@
   ],
   "result": {
     "count": 4,
-    "id": "shutterup:oak_shutter"
-  }
+    "item": "shutterup:oak_shutter"
+  },
+  "show_notification": true
 }

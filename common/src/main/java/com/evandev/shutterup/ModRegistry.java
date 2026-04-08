@@ -2,10 +2,12 @@ package com.evandev.shutterup;
 
 import com.evandev.shutterup.block.ShutterBlock;
 import com.evandev.shutterup.block.WeatheringShutterBlock;
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.WeatheringCopper;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.properties.BlockSetType;
@@ -17,6 +19,8 @@ import java.util.function.Supplier;
 public class ModRegistry {
     public static final Map<String, Supplier<Block>> BLOCKS = new LinkedHashMap<>();
     public static final Map<String, Supplier<Item>> ITEMS = new LinkedHashMap<>();
+
+    public static final BlockSetType COPPER = new BlockSetType("shutterup:copper", true, SoundType.COPPER, SoundEvents.IRON_DOOR_CLOSE, SoundEvents.IRON_DOOR_OPEN, SoundEvents.IRON_TRAPDOOR_CLOSE, SoundEvents.IRON_TRAPDOOR_OPEN, SoundEvents.METAL_PRESSURE_PLATE_CLICK_OFF, SoundEvents.METAL_PRESSURE_PLATE_CLICK_ON, SoundEvents.STONE_BUTTON_CLICK_OFF, SoundEvents.STONE_BUTTON_CLICK_ON);
 
     public static final Supplier<Block> ACACIA_SHUTTER = registerBlock("acacia_shutter", BlockSetType.ACACIA);
     public static final Supplier<Block> BAMBOO_SHUTTER = registerBlock("bamboo_shutter", BlockSetType.BAMBOO);
@@ -49,8 +53,8 @@ public class ModRegistry {
             @Override
             public Block get() {
                 if (instance == null) {
-                    BlockBehaviour.Properties props = BlockBehaviour.Properties.ofFullCopy(Blocks.COPPER_BLOCK).noOcclusion();
-                    instance = waxed ? new ShutterBlock(BlockSetType.COPPER, props) : new WeatheringShutterBlock(state, BlockSetType.COPPER, props);
+                    BlockBehaviour.Properties props = BlockBehaviour.Properties.copy(Blocks.COPPER_BLOCK).noOcclusion();
+                    instance = waxed ? new ShutterBlock(COPPER, props) : new WeatheringShutterBlock(state, COPPER, props);
                 }
                 return instance;
             }

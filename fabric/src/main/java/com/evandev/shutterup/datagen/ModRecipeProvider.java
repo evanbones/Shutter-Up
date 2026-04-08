@@ -3,25 +3,25 @@ package com.evandev.shutterup.datagen;
 import com.evandev.shutterup.ModRegistry;
 import net.fabricmc.fabric.api.datagen.v1.FabricDataOutput;
 import net.fabricmc.fabric.api.datagen.v1.provider.FabricRecipeProvider;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.data.recipes.FinishedRecipe;
 import net.minecraft.data.recipes.RecipeCategory;
-import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 
-import java.util.concurrent.CompletableFuture;
+import java.util.function.Consumer;
 
 public class ModRecipeProvider extends FabricRecipeProvider {
-    public ModRecipeProvider(FabricDataOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture) {
-        super(output, registriesFuture);
+
+    public ModRecipeProvider(FabricDataOutput output) {
+        super(output);
     }
 
     @Override
-    public void buildRecipes(RecipeOutput exporter) {
+    public void buildRecipes(Consumer<FinishedRecipe> exporter) {
         ModRegistry.ITEMS.forEach((name, itemSupplier) -> {
             if (name.contains("waxed_")) {
                 String unwaxedName = name.replace("waxed_", "");
@@ -49,7 +49,7 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                         .save(exporter);
             } else {
                 String plankName = name.replace("_shutter", "_planks");
-                Item plankItem = BuiltInRegistries.ITEM.get(ResourceLocation.withDefaultNamespace(plankName));
+                Item plankItem = BuiltInRegistries.ITEM.get(new ResourceLocation(plankName));
 
                 if (plankItem != Items.AIR) {
                     ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, itemSupplier.get(), 4)

@@ -1,4 +1,5 @@
 {
+  "replace": false,
   "values": [
     "shutterup:iron_shutter",
     "shutterup:copper_shutter",

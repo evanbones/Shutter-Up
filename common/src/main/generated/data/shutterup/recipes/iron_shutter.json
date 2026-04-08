@@ -12,6 +12,7 @@
   ],
   "result": {
     "count": 4,
-    "id": "shutterup:iron_shutter"
-  }
+    "item": "shutterup:iron_shutter"
+  },
+  "show_notification": true
 }

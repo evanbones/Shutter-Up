@@ -1,10 +1,12 @@
 package com.evandev.shutterup.block;
 
+import com.evandev.shutterup.ModRegistry;
 import com.evandev.shutterup.ModSounds;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.context.BlockPlaceContext;
@@ -172,7 +174,7 @@ public class ShutterBlock extends Block implements SimpleWaterloggedBlock {
     }
 
     @Override
-    protected @NotNull InteractionResult useWithoutItem(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos, @NotNull Player player, @NotNull BlockHitResult hit) {
+    public @NotNull InteractionResult use(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos, @NotNull Player player, @NotNull InteractionHand hand, @NotNull BlockHitResult hit) {
         if (!this.type.canOpenByHand()) {
             return InteractionResult.PASS;
         }
@@ -323,7 +325,7 @@ public class ShutterBlock extends Block implements SimpleWaterloggedBlock {
 
     private void playOpenCloseSound(Level level, BlockPos pos, boolean open, @Nullable Player player) {
         SoundEvent sound;
-        if (this.type == BlockSetType.IRON || this.type == BlockSetType.COPPER) {
+        if (this.type == BlockSetType.IRON || this.type == ModRegistry.COPPER) {
             sound = open ? ModSounds.METAL_SHUTTER_OPEN : ModSounds.METAL_SHUTTER_CLOSE;
         } else {
             sound = open ? ModSounds.SHUTTER_OPEN : ModSounds.SHUTTER_CLOSE;
