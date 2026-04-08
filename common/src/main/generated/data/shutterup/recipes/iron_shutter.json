@@ -7,11 +7,10 @@
     }
   },
   "pattern": [
-    "P P",
     "P P"
   ],
   "result": {
-    "count": 4,
+    "count": 2,
     "item": "shutterup:iron_shutter"
   },
   "show_notification": true
