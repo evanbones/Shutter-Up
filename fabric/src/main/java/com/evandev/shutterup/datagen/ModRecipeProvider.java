@@ -38,7 +38,7 @@ public class ModRecipeProvider extends FabricRecipeProvider {
                         .define('P', Items.IRON_INGOT)
                         .unlockedBy("has_iron_ingot", has(Items.IRON_INGOT))
                         .save(exporter);
-            } else if (name.contains("copper_shutter")) {
+            } else if (name.equals("copper_shutter")) {
                 Item ingot = Items.COPPER_INGOT;
 
                 ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, itemSupplier.get(), 2)
