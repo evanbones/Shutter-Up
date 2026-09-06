@@ -1,5 +1,8 @@
 # Shutter Up!
 
+<a href='https://fabricmc.net'><img alt="fabric" height="56" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/supported/fabric_vector.svg"></a>
+<a href='https://neoforged.net/'><img alt="neoforge" height="56" src="https://cdn.jsdelivr.net/npm/@intergrav/devins-badges@3/assets/cozy/supported/neoforge_vector.svg"></a> <a href='https://www.youtube.com/watch?v=EvAhPPejzBQ'><img alt="bailey" height="56" src="https://raw.githubusercontent.com/Kayladillo/myimagehub/12ee0de5f2f6dc74d6f3327516517b90c9ffd7b5/cozy.svg"></a>
+
 **Shutter Up** is a lightweight mod that adds decorative shutters to the game. Designed to enhance your builds, these shutters function similarly to trapdoors but are specifically tailored for window decoration.
 
 It's a multi-loader mod, supporting Fabric (1.20.1+), Forge (1.20.1), and NeoForge (1.21.1+).
